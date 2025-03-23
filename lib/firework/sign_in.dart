@@ -9,10 +9,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final providers = [EmailAuthProvider()];
 
-    void onSignedIn() {
-      Navigator.pushReplacementNamed(context, '/profile');
-    }
-
     return MaterialApp(
       initialRoute:
           FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/profile',
@@ -23,10 +19,10 @@ class MyApp extends StatelessWidget {
             actions: [
               AuthStateChangeAction<UserCreated>((context, state) {
                 // Put any new user logic here
-                onSignedIn();
+                Navigator.pushReplacementNamed(context, '/profile');
               }),
               AuthStateChangeAction<SignedIn>((context, state) {
-                onSignedIn();
+                Navigator.pushReplacementNamed(context, '/profile');
               }),
             ],
           );
