@@ -35,6 +35,8 @@ class MyApp extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/sign-in');
               }),
             ],
+            showDeleteConfirmationDialog: true,
+            showUnlinkConfirmationDialog: true,
           );
         },
       },
