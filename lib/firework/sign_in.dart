@@ -46,24 +46,22 @@ class _SignInTileState extends State<SignInTile> {
     return ListTile(
       leading: Icon(Icons.person),
       title: Text(name!),
-      subtitle: GestureDetector(
-        child: Text(
-          FirebaseAuth.instance.currentUser == null ? 'Log in' : 'Profile',
-          style: TextStyle(decoration: TextDecoration.underline),
-        ),
-        onTap: () {
-          Navigator.pop(context); // close drawer
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder:
-                  (context) =>
-                      FirebaseAuth.instance.currentUser == null
-                          ? signInPage
-                          : profilePage,
-            ),
-          );
-        },
+      subtitle: Text(
+        FirebaseAuth.instance.currentUser == null ? 'Log in' : 'View profile',
+        style: TextStyle(decoration: TextDecoration.underline),
       ),
+      onTap: () {
+        Navigator.pop(context); // close drawer
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    FirebaseAuth.instance.currentUser == null
+                        ? signInPage
+                        : profilePage,
+          ),
+        );
+      },
     );
   }
 }
