@@ -37,6 +37,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int userCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: MyDrawer(),
       body: FirestoreUserListView(),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          userCount++;
+          User.createUser(User(name: 'user $userCount', age: 10 + userCount));
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

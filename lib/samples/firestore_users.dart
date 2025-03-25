@@ -14,6 +14,12 @@ class User {
   Map<String, Object?> toJson() {
     return {'name': name, 'age': age};
   }
+
+  static createUser(User data) {
+    final ref = FirebaseFirestore.instance.collection('users').doc();
+
+    ref.set(data.toJson());
+  }
 }
 
 final usersQuery = FirebaseFirestore.instance
