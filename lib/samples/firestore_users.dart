@@ -15,10 +15,14 @@ class User {
     return {'name': name, 'age': age};
   }
 
-  static createUser(User data) {
+  static createData(User data) {
     final ref = FirebaseFirestore.instance.collection('users').doc();
-
     ref.set(data.toJson());
+  }
+
+  static deleteData(String id) {
+    final ref = FirebaseFirestore.instance.collection('users').doc(id);
+    ref.delete();
   }
 }
 
@@ -41,7 +45,18 @@ class FirestoreUserListView extends StatelessWidget {
         // Data is now typed!
         User user = snapshot.data();
 
-        return ListTile(title: Text(user.name), subtitle: Text('${user.age}'));
+        return ListTile(
+          title: Text(user.name),
+          subtitle: Text('${user.age}'),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              final docId = snapshot.id;
+              debugPrint('deleting user: id=$docId');
+              User.deleteData(docId);
+            },
+          ),
+        );
       },
       separatorBuilder: (BuildContext context, int index) {
         return Divider();

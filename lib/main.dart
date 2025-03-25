@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           userCount++;
-          User.createUser(User(name: 'user $userCount', age: 10 + userCount));
+          User.createData(User(name: 'user $userCount', age: 10 + userCount));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
