@@ -35,13 +35,16 @@ class FirestoreUserListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FirestoreListView<User>(
+    return FirestoreListView<User>.separated(
       query: usersQuery,
       itemBuilder: (context, snapshot) {
         // Data is now typed!
         User user = snapshot.data();
 
         return ListTile(title: Text(user.name), subtitle: Text('${user.age}'));
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider();
       },
     );
   }
