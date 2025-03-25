@@ -2,44 +2,68 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SignInTile extends StatefulWidget {
+  const SignInTile({super.key});
 
   @override
+  State<SignInTile> createState() => _SignInTileState();
+}
+
+class _SignInTileState extends State<SignInTile> {
+  @override
   Widget build(BuildContext context) {
+    final name =
+        FirebaseAuth.instance.currentUser == null
+            ? 'Logged out'
+            : FirebaseAuth.instance.currentUser!.displayName;
+
     final providers = [EmailAuthProvider()];
 
-    return MaterialApp(
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/profile',
-      routes: {
-        '/sign-in': (context) {
-          return SignInScreen(
-            providers: providers,
-            actions: [
-              AuthStateChangeAction<UserCreated>((context, state) {
-                // Put any new user logic here
-                Navigator.pushReplacementNamed(context, '/profile');
-              }),
-              AuthStateChangeAction<SignedIn>((context, state) {
-                Navigator.pushReplacementNamed(context, '/profile');
-              }),
-            ],
+    final signInPage = SignInScreen(
+      providers: providers,
+      actions: [
+        AuthStateChangeAction<UserCreated>((context, state) {
+          // Put any new user logic here
+          Navigator.pop(context);
+        }),
+        AuthStateChangeAction<SignedIn>((context, state) {
+          Navigator.pop(context);
+        }),
+      ],
+    );
+
+    final profilePage = ProfileScreen(
+      providers: providers,
+      actions: [
+        SignedOutAction((context) {
+          Navigator.pop(context);
+        }),
+      ],
+      showDeleteConfirmationDialog: true,
+      showUnlinkConfirmationDialog: true,
+    );
+
+    return ListTile(
+      leading: Icon(Icons.person),
+      title: Text(name!),
+      subtitle: GestureDetector(
+        child: Text(
+          FirebaseAuth.instance.currentUser == null ? 'Log in' : 'Profile',
+          style: TextStyle(decoration: TextDecoration.underline),
+        ),
+        onTap: () {
+          Navigator.pop(context); // close drawer
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      FirebaseAuth.instance.currentUser == null
+                          ? signInPage
+                          : profilePage,
+            ),
           );
         },
-        '/profile': (context) {
-          return ProfileScreen(
-            providers: providers,
-            actions: [
-              SignedOutAction((context) {
-                Navigator.pushReplacementNamed(context, '/sign-in');
-              }),
-            ],
-            showDeleteConfirmationDialog: true,
-            showUnlinkConfirmationDialog: true,
-          );
-        },
-      },
+      ),
     );
   }
 }
