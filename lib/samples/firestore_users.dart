@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 
-mixin FirestoreDocument {
+class FirestoreDocumentTime {
   Timestamp? updatedTime;
   Timestamp? createdTime;
 
-  loadTime(Map<String, Object?> json) {
+  fromJson(Map<String, Object?> json) {
     updatedTime =
         json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
     createdTime =
         json['_createTime_'] == null ? null : json['_createTime_'] as Timestamp;
   }
 
-  Map<String, Object?> saveTime() {
+  Map<String, Object?> toJson() {
     return {
       '_updateTime_': FieldValue.serverTimestamp(),
       if (createdTime == null) '_createTime_': FieldValue.serverTimestamp(),
@@ -21,22 +21,23 @@ mixin FirestoreDocument {
   }
 }
 
-class User with FirestoreDocument {
+class User {
   User({required this.name, required this.age});
 
   final String name;
   final int age;
+  final metaTime = FirestoreDocumentTime();
 
   User.fromJson(Map<String, Object?> json)
       : name = json['name']! as String,
         age = json['age']! as int {
-    loadTime(json);
+    metaTime.fromJson(json);
   }
 
   Map<String, Object?> toJson() {
     return {
       ...{'name': name, 'age': age},
-      ...saveTime(),
+      ...metaTime.toJson(),
     };
   }
 
@@ -52,8 +53,8 @@ class User with FirestoreDocument {
 
   updateData(String id, {String? newName, int? newAge}) {
     final newdata = User(name: newName ?? name, age: newAge ?? age);
-    newdata.createdTime = createdTime;
-    newdata.updatedTime = updatedTime;
+    newdata.metaTime.createdTime = metaTime.createdTime;
+    newdata.metaTime.updatedTime = metaTime.updatedTime;
     final ref = FirebaseFirestore.instance.collection('users').doc(id);
     ref.update(newdata.toJson());
   }
@@ -77,8 +78,8 @@ class FirestoreUserListView extends StatelessWidget {
       itemBuilder: (context, snapshot) {
         // Data is now typed!
         User user = snapshot.data();
-        final created = user.createdTime?.toDate();
-        final updated = user.updatedTime?.toDate();
+        final created = user.metaTime.createdTime?.toDate();
+        final updated = user.metaTime.updatedTime?.toDate();
 
         return ListTile(
           title: Text('${user.name} @ ${user.age}'),
