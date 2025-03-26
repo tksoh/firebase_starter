@@ -19,7 +19,7 @@ class FirestoreDocumentTime {
     };
   }
 
-  copyFrom(FirestoreDocumentTime from) {
+  void copyFrom(FirestoreDocumentTime from) {
     updateTime = from.updateTime;
     createTime = from.createTime;
   }

@@ -11,6 +11,12 @@ class User {
   final int age;
   final metaTime = FirestoreDocumentTime();
 
+  User copyWith({String? name, int? age}) {
+    final newdata = User(name: name ?? this.name, age: age ?? this.age)
+      ..metaTime.copyFrom(metaTime);
+    return newdata;
+  }
+
   User.fromJson(Map<String, Object?> json)
       : name = json['name']! as String,
         age = json['age']! as int {
@@ -34,9 +40,7 @@ class User {
     ref.delete();
   }
 
-  updateData(String id, {String? newName, int? newAge}) {
-    final newdata = User(name: newName ?? name, age: newAge ?? age)
-      ..metaTime.copyFrom(metaTime);
+  updateData(String id, User newdata) {
     final ref = FirebaseFirestore.instance.collection('users').doc(id);
     ref.update(newdata.toJson());
   }
@@ -74,7 +78,7 @@ class FirestoreUserListView extends StatelessWidget {
                 onPressed: () {
                   final docId = snapshot.id;
                   debugPrint('updating user: id=$docId');
-                  user.updateData(docId, newAge: user.age + 1);
+                  user.updateData(docId, user.copyWith(age: user.age + 1));
                 },
               ),
               IconButton(
