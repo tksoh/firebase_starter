@@ -5,27 +5,30 @@ import 'package:flutter/material.dart';
 import '../models/doc_time.dart';
 
 class User {
-  User({required this.name, required this.age});
+  User({required this.name, required this.age, this.docId});
 
   final String name;
   final int age;
+  final String? docId;
   final docTime = FirestoreDocumentTime();
 
   User copyWith({String? name, int? age}) {
-    final newdata = User(name: name ?? this.name, age: age ?? this.age)
-      ..docTime.copyFrom(docTime);
+    final newdata =
+        User(name: name ?? this.name, age: age ?? this.age, docId: docId)
+          ..docTime.copyFrom(docTime);
     return newdata;
   }
 
-  User.fromJson(Map<String, Object?> json)
+  User.fromJson(Map<String, Object?> json, {String? id})
       : name = json['name']! as String,
-        age = json['age']! as int {
+        age = json['age']! as int,
+        docId = id {
     docTime.fromJson(json);
   }
 
   Map<String, Object?> toJson() {
     return {
-      ...{'name': name, 'age': age},
+      ...{'name': name, 'age': age, 'id': docId},
       ...docTime.toJson(),
     };
   }
@@ -35,13 +38,15 @@ class User {
     ref.set(data.toJson());
   }
 
-  static deleteData(String id) {
-    final ref = FirebaseFirestore.instance.collection('users').doc(id);
+  void deleteData() {
+    final ref = FirebaseFirestore.instance.collection('users').doc(docId);
     ref.delete();
   }
 
-  static updateData(String id, User newdata) {
-    final ref = FirebaseFirestore.instance.collection('users').doc(id);
+  void updateData({String? name, int? age}) {
+    final newdata = copyWith(name: name ?? this.name, age: age ?? this.age);
+    final ref =
+        FirebaseFirestore.instance.collection('users').doc(newdata.docId);
     ref.update(newdata.toJson());
   }
 }
@@ -50,7 +55,8 @@ final usersQuery = FirebaseFirestore.instance
     .collection('users')
     .orderBy('name')
     .withConverter<User>(
-      fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
+      fromFirestore: (snapshot, _) =>
+          User.fromJson(snapshot.data()!, id: snapshot.id),
       toFirestore: (user, _) => user.toJson(),
     );
 
@@ -69,7 +75,10 @@ class FirestoreUserListView extends StatelessWidget {
 
         return ListTile(
           title: Text('${user.name} @ ${user.age}'),
-          subtitle: Text('Added: $created\nUpdated:$updated'),
+          subtitle: Text(
+            'Added: $created\nUpdated: $updated\nId: ${user.docId}',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -78,7 +87,7 @@ class FirestoreUserListView extends StatelessWidget {
                 onPressed: () {
                   final docId = snapshot.id;
                   debugPrint('updating user: id=$docId');
-                  User.updateData(docId, user.copyWith(age: user.age + 1));
+                  user.updateData(age: user.age + 1);
                 },
               ),
               IconButton(
@@ -86,7 +95,7 @@ class FirestoreUserListView extends StatelessWidget {
                 onPressed: () {
                   final docId = snapshot.id;
                   debugPrint('deleting user: id=$docId');
-                  User.deleteData(docId);
+                  user.deleteData();
                 },
               ),
             ],
