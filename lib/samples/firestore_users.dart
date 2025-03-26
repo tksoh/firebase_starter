@@ -2,17 +2,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 
-class User {
-  User({required this.name, required this.age});
+mixin FirestoreDocument {
+  late Timestamp? updatedTime;
+  late Timestamp? createdTime;
 
-  User.fromJson(Map<String, Object?> json)
-    : this(name: json['name']! as String, age: json['age']! as int);
+  loadTime(Map<String, Object?> json) {
+    updatedTime =
+        json['_updated_time_'] == null
+            ? null
+            : json['_updated_time_'] as Timestamp;
+    createdTime =
+        json['_created_time_'] == null
+            ? null
+            : json['_created_time_'] as Timestamp;
+  }
+
+  Map<String, Object?> saveTime() {
+    return {
+      '_updated_time_': FieldValue.serverTimestamp(),
+      '_created_time_': FieldValue.serverTimestamp(),
+    };
+  }
+}
+
+class User with FirestoreDocument {
+  User({required this.name, required this.age});
 
   final String name;
   final int age;
 
+  User.fromJson(Map<String, Object?> json)
+    : name = json['name']! as String,
+      age = json['age']! as int {
+    loadTime(json);
+  }
+
   Map<String, Object?> toJson() {
-    return {'name': name, 'age': age};
+    return {
+      ...{'name': name, 'age': age},
+      ...saveTime(),
+    };
   }
 
   static createData(User data) {
@@ -44,10 +73,12 @@ class FirestoreUserListView extends StatelessWidget {
       itemBuilder: (context, snapshot) {
         // Data is now typed!
         User user = snapshot.data();
+        final created = user.createdTime?.toDate();
+        final updated = user.updatedTime?.toDate();
 
         return ListTile(
-          title: Text(user.name),
-          subtitle: Text('${user.age}'),
+          title: Text('${user.name} @ ${user.age}'),
+          subtitle: Text('Added: $created\nUpdated:$updated'),
           trailing: IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
