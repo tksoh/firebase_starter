@@ -3,21 +3,26 @@ import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FirestoreDocumentTime {
-  Timestamp? updatedTime;
-  Timestamp? createdTime;
+  Timestamp? createTime;
+  Timestamp? updateTime;
 
   fromJson(Map<String, Object?> json) {
-    updatedTime =
+    updateTime =
         json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
-    createdTime =
+    createTime =
         json['_createTime_'] == null ? null : json['_createTime_'] as Timestamp;
   }
 
   Map<String, Object?> toJson() {
     return {
       '_updateTime_': FieldValue.serverTimestamp(),
-      if (createdTime == null) '_createTime_': FieldValue.serverTimestamp(),
+      if (createTime == null) '_createTime_': FieldValue.serverTimestamp(),
     };
+  }
+
+  copyFrom(FirestoreDocumentTime from) {
+    updateTime = from.updateTime;
+    createTime = from.createTime;
   }
 }
 
@@ -53,8 +58,7 @@ class User {
 
   updateData(String id, {String? newName, int? newAge}) {
     final newdata = User(name: newName ?? name, age: newAge ?? age);
-    newdata.metaTime.createdTime = metaTime.createdTime;
-    newdata.metaTime.updatedTime = metaTime.updatedTime;
+    newdata.metaTime.copyFrom(metaTime);
     final ref = FirebaseFirestore.instance.collection('users').doc(id);
     ref.update(newdata.toJson());
   }
@@ -78,8 +82,8 @@ class FirestoreUserListView extends StatelessWidget {
       itemBuilder: (context, snapshot) {
         // Data is now typed!
         User user = snapshot.data();
-        final created = user.metaTime.createdTime?.toDate();
-        final updated = user.metaTime.updatedTime?.toDate();
+        final created = user.metaTime.createTime?.toDate();
+        final updated = user.metaTime.updateTime?.toDate();
 
         return ListTile(
           title: Text('${user.name} @ ${user.age}'),
