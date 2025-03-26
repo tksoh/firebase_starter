@@ -3,8 +3,8 @@ import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 
 mixin FirestoreDocument {
-  late Timestamp? updatedTime;
-  late Timestamp? createdTime;
+  Timestamp? updatedTime;
+  Timestamp? createdTime;
 
   loadTime(Map<String, Object?> json) {
     updatedTime =
@@ -20,7 +20,7 @@ mixin FirestoreDocument {
   Map<String, Object?> saveTime() {
     return {
       '_updated_time_': FieldValue.serverTimestamp(),
-      '_created_time_': FieldValue.serverTimestamp(),
+      if (createdTime == null) '_created_time_': FieldValue.serverTimestamp(),
     };
   }
 }
@@ -53,6 +53,14 @@ class User with FirestoreDocument {
     final ref = FirebaseFirestore.instance.collection('users').doc(id);
     ref.delete();
   }
+
+  updateData(String id, {String? newName, int? newAge}) {
+    final newdata = User(name: newName ?? name, age: newAge ?? age);
+    newdata.createdTime = createdTime;
+    newdata.updatedTime = updatedTime;
+    final ref = FirebaseFirestore.instance.collection('users').doc(id);
+    ref.update(newdata.toJson());
+  }
 }
 
 final usersQuery = FirebaseFirestore.instance
@@ -79,13 +87,26 @@ class FirestoreUserListView extends StatelessWidget {
         return ListTile(
           title: Text('${user.name} @ ${user.age}'),
           subtitle: Text('Added: $created\nUpdated:$updated'),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              final docId = snapshot.id;
-              debugPrint('deleting user: id=$docId');
-              User.deleteData(docId);
-            },
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit_outlined),
+                onPressed: () {
+                  final docId = snapshot.id;
+                  debugPrint('updating user: id=$docId');
+                  user.updateData(docId, newAge: user.age + 1);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete_outlined),
+                onPressed: () {
+                  final docId = snapshot.id;
+                  debugPrint('deleting user: id=$docId');
+                  User.deleteData(docId);
+                },
+              ),
+            ],
           ),
         );
       },
