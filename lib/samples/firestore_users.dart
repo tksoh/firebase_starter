@@ -2,30 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 
-class FirestoreDocumentTime {
-  Timestamp? createTime;
-  Timestamp? updateTime;
-
-  fromJson(Map<String, Object?> json) {
-    updateTime =
-        json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
-    createTime =
-        json['_createTime_'] == null ? null : json['_createTime_'] as Timestamp;
-  }
-
-  Map<String, Object?> toJson({Timestamp? toCreate, Timestamp? toUpdate}) {
-    return {
-      '_updateTime_': toUpdate ?? FieldValue.serverTimestamp(),
-      if (createTime == null)
-        '_createTime_': toCreate ?? FieldValue.serverTimestamp(),
-    };
-  }
-
-  copyFrom(FirestoreDocumentTime from) {
-    updateTime = from.updateTime;
-    createTime = from.createTime;
-  }
-}
+import '../models/doc_time.dart';
 
 class User {
   User({required this.name, required this.age});
