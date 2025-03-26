@@ -39,14 +39,15 @@ class User {
   }
 
   void deleteData() {
+    assert(docId != null);
     final ref = FirebaseFirestore.instance.collection('users').doc(docId);
     ref.delete();
   }
 
   void updateData({String? name, int? age}) {
-    final newdata = copyWith(name: name ?? this.name, age: age ?? this.age);
-    final ref =
-        FirebaseFirestore.instance.collection('users').doc(newdata.docId);
+    assert(docId != null);
+    final newdata = copyWith(name: name, age: age);
+    final ref = FirebaseFirestore.instance.collection('users').doc(docId);
     ref.update(newdata.toJson());
   }
 }
