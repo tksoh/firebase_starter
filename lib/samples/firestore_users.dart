@@ -8,19 +8,15 @@ mixin FirestoreDocument {
 
   loadTime(Map<String, Object?> json) {
     updatedTime =
-        json['_updated_time_'] == null
-            ? null
-            : json['_updated_time_'] as Timestamp;
+        json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
     createdTime =
-        json['_created_time_'] == null
-            ? null
-            : json['_created_time_'] as Timestamp;
+        json['_createTime_'] == null ? null : json['_createTime_'] as Timestamp;
   }
 
   Map<String, Object?> saveTime() {
     return {
-      '_updated_time_': FieldValue.serverTimestamp(),
-      if (createdTime == null) '_created_time_': FieldValue.serverTimestamp(),
+      '_updateTime_': FieldValue.serverTimestamp(),
+      if (createdTime == null) '_createTime_': FieldValue.serverTimestamp(),
     };
   }
 }
@@ -32,8 +28,8 @@ class User with FirestoreDocument {
   final int age;
 
   User.fromJson(Map<String, Object?> json)
-    : name = json['name']! as String,
-      age = json['age']! as int {
+      : name = json['name']! as String,
+        age = json['age']! as int {
     loadTime(json);
   }
 
