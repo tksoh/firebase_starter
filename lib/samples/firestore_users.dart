@@ -58,8 +58,8 @@ class User {
   }
 
   updateData(String id, {String? newName, int? newAge}) {
-    final newdata = User(name: newName ?? name, age: newAge ?? age);
-    newdata.metaTime.copyFrom(metaTime);
+    final newdata = User(name: newName ?? name, age: newAge ?? age)
+      ..metaTime.copyFrom(metaTime);
     final ref = FirebaseFirestore.instance.collection('users').doc(id);
     ref.update(newdata.toJson());
   }
