@@ -13,10 +13,11 @@ class FirestoreDocumentTime {
         json['_createTime_'] == null ? null : json['_createTime_'] as Timestamp;
   }
 
-  Map<String, Object?> toJson() {
+  Map<String, Object?> toJson({Timestamp? toCreate, Timestamp? toUpdate}) {
     return {
-      '_updateTime_': FieldValue.serverTimestamp(),
-      if (createTime == null) '_createTime_': FieldValue.serverTimestamp(),
+      '_updateTime_': toUpdate ?? FieldValue.serverTimestamp(),
+      if (createTime == null)
+        '_createTime_': toCreate ?? FieldValue.serverTimestamp(),
     };
   }
 
