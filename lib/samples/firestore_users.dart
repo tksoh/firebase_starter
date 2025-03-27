@@ -16,9 +16,12 @@ class User {
   final docTime = FirestoreDocumentTime();
 
   User copyWith({String? name, int? age}) {
-    final newdata =
-        User(name: name ?? this.name, age: age ?? this.age, docId: docId)
-          ..docTime.copyFrom(docTime);
+    final newdata = User(
+      name: name ?? this.name,
+      age: age ?? this.age,
+      docId: docId,
+    )..docTime.copyFrom(docTime);
+
     return newdata;
   }
 
