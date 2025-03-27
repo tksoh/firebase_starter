@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_starter/samples/firestore_users.dart';
+// import 'package:firebase_starter/samples/firestore_users.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 import 'drawer.dart';
+import 'samples/firestore_myuser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,11 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: MyDrawer(),
-      body: FirestoreUserListView(),
+      body: FirestoreMyListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           userCount++;
-          User.createData(User(name: 'user $userCount', age: 10 + userCount));
+          final user = MyUser(name: 'user $userCount', age: 10 + userCount);
+          user.createData();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
