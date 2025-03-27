@@ -7,8 +7,11 @@ import '../models/doc_time.dart';
 class User {
   User({required this.name, required this.age, this.docId});
 
+  // user data
   final String name;
   final int age;
+
+  // meta data
   final String? docId;
   final docTime = FirestoreDocumentTime();
 
@@ -28,7 +31,7 @@ class User {
 
   Map<String, Object?> toJson() {
     return {
-      ...{'name': name, 'age': age, 'id': docId},
+      ...{'name': name, 'age': age},
       ...docTime.toJson(),
     };
   }
