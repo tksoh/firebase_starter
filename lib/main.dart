@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: MyDrawer(),
-      body: FirestoreMyListView(),
+      body: MyUserListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           userCount++;
