@@ -7,6 +7,7 @@ class ActionListView<T> extends StatefulWidget {
   final Widget Function(BuildContext, QueryDocumentSnapshot<T>) itemBuilder;
   final void Function(String id, T data)? deleteAction;
   final void Function(String id, T data)? editAction;
+  final bool debug;
 
   const ActionListView({
     super.key,
@@ -14,6 +15,7 @@ class ActionListView<T> extends StatefulWidget {
     required this.itemBuilder,
     this.deleteAction,
     this.editAction,
+    this.debug = false,
   });
 
   @override
@@ -48,12 +50,29 @@ class _ActionListViewState<T> extends State<ActionListView<T>> {
           children: [
             widget.itemBuilder(context, snapshot),
             actionButtons,
+            if (widget.debug) debugInfo(docId, context),
           ],
         );
       },
       separatorBuilder: (BuildContext context, int index) {
         return Divider();
       },
+    );
+  }
+
+  Widget debugInfo(String docId, BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        child: Text(
+          'ID: $docId',
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: Colors.red),
+        ),
+      ),
     );
   }
 }

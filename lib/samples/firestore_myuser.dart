@@ -59,7 +59,6 @@ class MyUserListView extends StatelessWidget {
       query: myQuery,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
-        final docId = snapshot.id;
         final created = user.docTime.createTime?.toDate();
         final updated = user.docTime.updateTime?.toDate();
         final name = user.name;
@@ -67,7 +66,7 @@ class MyUserListView extends StatelessWidget {
         return ListTile(
           title: Text('$name => $age'),
           subtitle: Text(
-            'Added: $created\nUpdated: $updated\nID: $docId',
+            'Added: $created\nUpdated: $updated',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         );
@@ -81,6 +80,7 @@ class MyUserListView extends StatelessWidget {
         final newuser = data.copyWith(age: data.age + 1);
         newuser.updateData(id);
       },
+      debug: true,
     );
   }
 }
