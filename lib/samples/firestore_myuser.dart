@@ -73,75 +73,12 @@ final myQuery = FirebaseFirestore.instance
       toFirestore: (user, _) => user.toJson(),
     );
 
-class FirestoreMyListView extends StatelessWidget {
-  const FirestoreMyListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FirestoreListView<MyUser>.separated(
-      query: myQuery,
-      itemBuilder: (context, snapshot) {
-        // Data is now typed!
-        MyUser user = snapshot.data();
-        final docId = snapshot.id;
-        final created = user.docTime.createTime?.toDate();
-        final updated = user.docTime.updateTime?.toDate();
-
-        var actionButtons = Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              icon: Icon(Icons.delete_outlined),
-              onPressed: () {
-                debugPrint('deleting user: id=$docId');
-                user.deleteData(docId);
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.edit_outlined),
-              onPressed: () {
-                debugPrint('updating user: id=$docId');
-                final newuser = user.copyWith(age: user.age + 1);
-                newuser.updateData(docId);
-              },
-            ),
-          ],
-        );
-
-        return Column(
-          children: [
-            ListTile(
-              minVerticalPadding: 0,
-              leading: Icon(Icons.person),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('${user.name} @ ${user.age}'),
-                  Text(
-                    'Added: $created\nUpdated: $updated\nID: $docId',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-              // subtitle: actions,
-            ),
-            actionButtons,
-          ],
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider();
-      },
-    );
-  }
-}
-
 class MyUserListView extends StatelessWidget {
   const MyUserListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppsheetListView<MyUser>(
+    return ActionListView<MyUser>(
       query: myQuery,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
@@ -171,13 +108,13 @@ class MyUserListView extends StatelessWidget {
   }
 }
 
-class AppsheetListView<T> extends StatefulWidget {
+class ActionListView<T> extends StatefulWidget {
   final Query<T> query;
   final Widget Function(BuildContext, QueryDocumentSnapshot<T>) itemBuilder;
   final void Function(String id, T data)? deleteAction;
   final void Function(String id, T data)? editAction;
 
-  const AppsheetListView({
+  const ActionListView({
     super.key,
     required this.query,
     required this.itemBuilder,
@@ -186,10 +123,10 @@ class AppsheetListView<T> extends StatefulWidget {
   });
 
   @override
-  State<AppsheetListView<T>> createState() => _AppsheetListViewState<T>();
+  State<ActionListView<T>> createState() => _ActionListViewState<T>();
 }
 
-class _AppsheetListViewState<T> extends State<AppsheetListView<T>> {
+class _ActionListViewState<T> extends State<ActionListView<T>> {
   @override
   Widget build(BuildContext context) {
     return FirestoreListView<T>.separated(
