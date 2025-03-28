@@ -70,7 +70,7 @@ class _ActionListViewState<T> extends State<ActionListView<T>> {
           style: Theme.of(context)
               .textTheme
               .bodySmall
-              ?.copyWith(color: Colors.red),
+              ?.copyWith(color: Theme.of(context).colorScheme.error),
         ),
       ),
     );
