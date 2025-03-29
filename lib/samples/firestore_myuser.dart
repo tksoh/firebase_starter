@@ -93,8 +93,8 @@ class MyUserGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return FirestoreActionGridView(
       query: myQuery,
-      itemBuilder: (context, index, snapshot) {
-        final user = snapshot.data();
+      itemBuilder: (context, index, data) {
+        final user = data;
         final created = user.docTime.createTime?.toDate();
         final updated = user.docTime.updateTime?.toDate();
         final name = user.name;
