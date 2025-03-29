@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
-import 'package:flutter/material.dart';
 
 import '../models/doc_time.dart';
 
@@ -64,52 +62,3 @@ final usersQuery = FirebaseFirestore.instance
           User.fromJson(snapshot.data()!, id: snapshot.id),
       toFirestore: (user, _) => user.toJson(),
     );
-
-class FirestoreUserListView extends StatelessWidget {
-  const FirestoreUserListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FirestoreListView<User>.separated(
-      query: usersQuery,
-      itemBuilder: (context, snapshot) {
-        // Data is now typed!
-        User user = snapshot.data();
-        final created = user.docTime.createTime?.toDate();
-        final updated = user.docTime.updateTime?.toDate();
-
-        return ListTile(
-          title: Text('${user.name} @ ${user.age}'),
-          subtitle: Text(
-            'Added: $created\nUpdated: $updated\nId: ${user.docId}',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit_outlined),
-                onPressed: () {
-                  final docId = snapshot.id;
-                  debugPrint('updating user: id=$docId');
-                  user.updateData(age: user.age + 1);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.delete_outlined),
-                onPressed: () {
-                  final docId = snapshot.id;
-                  debugPrint('deleting user: id=$docId');
-                  user.deleteData();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider();
-      },
-    );
-  }
-}
