@@ -50,8 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: MyDrawer(),
-      // body: MyUserListView(),
-      body: MyUserGridView(),
+      body: MyUserListView(),
+      // body: MyUserGridView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           userCount++;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'action_gridview.dart';
 
 class ActionListView<T> extends StatefulWidget {
   final Query<T> query;
@@ -25,9 +26,9 @@ class ActionListView<T> extends StatefulWidget {
 class _ActionListViewState<T> extends State<ActionListView<T>> {
   @override
   Widget build(BuildContext context) {
-    return FirestoreListView<T>.separated(
+    return FirestoreSimpleListView<T>(
       query: widget.query,
-      itemBuilder: (context, snapshot) {
+      itemBuilder: (context, index, snapshot) {
         T data = snapshot.data();
         final docId = snapshot.id;
 
@@ -53,9 +54,6 @@ class _ActionListViewState<T> extends State<ActionListView<T>> {
             if (widget.debug) debugInfo(docId, context),
           ],
         );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider();
       },
     );
   }

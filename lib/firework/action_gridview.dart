@@ -80,6 +80,37 @@ class FirestoreSimpleGridView<T> extends StatelessWidget {
   }
 }
 
+class FirestoreSimpleListView<T> extends StatelessWidget {
+  const FirestoreSimpleListView({
+    super.key,
+    required this.query,
+    required this.itemBuilder,
+  });
+
+  final Query<T> query;
+  final Widget Function(BuildContext, int, QueryDocumentSnapshot<T>)
+      itemBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    return FirestoreSimpleQueryBuilder(
+      query: query,
+      itemBuilder: (context, snapshot) {
+        final list = snapshot.data;
+        return ListView.separated(
+          itemCount: list?.length ?? 0,
+          itemBuilder: (BuildContext context, int index) {
+            return itemBuilder(context, index, list![index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider();
+          },
+        );
+      },
+    );
+  }
+}
+
 class FirestoreActionGridView<T> extends StatelessWidget {
   final Query<T> query;
   final Widget Function(BuildContext, int, T) itemBuilder;
