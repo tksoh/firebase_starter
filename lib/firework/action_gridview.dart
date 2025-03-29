@@ -85,9 +85,11 @@ class FirestoreSimpleListView<T> extends StatelessWidget {
     super.key,
     required this.query,
     required this.itemBuilder,
+    this.separtor,
   });
 
   final Query<T> query;
+  final Widget? separtor;
   final Widget Function(BuildContext, int, QueryDocumentSnapshot<T>)
       itemBuilder;
 
@@ -103,7 +105,7 @@ class FirestoreSimpleListView<T> extends StatelessWidget {
             return itemBuilder(context, index, list![index]);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider();
+            return separtor ?? Container();
           },
         );
       },
