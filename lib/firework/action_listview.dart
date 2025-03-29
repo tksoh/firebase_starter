@@ -55,6 +55,7 @@ class _ActionListViewState<T> extends State<ActionListView<T>> {
           ],
         );
       },
+      separatorBuilder: (_, index) => Divider(),
     );
   }
 
