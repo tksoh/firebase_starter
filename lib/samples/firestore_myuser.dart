@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../firework/action_listview.dart';
 import '../firework/firestore_crub_helper.dart';
+import '../firework/query_builder.dart';
 import '../models/doc_time.dart';
 
 class MyUser extends DocumentBase with FirestoreCRUD {

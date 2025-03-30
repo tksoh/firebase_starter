@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'action_gridview.dart';
+import 'query_builder.dart';
 
 class ActionListView<T> extends StatefulWidget {
   final Query<T> query;
