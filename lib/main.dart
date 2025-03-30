@@ -76,7 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget dataView() {
     return AuthStateChangesBuilder(
-      itemBuilder: (p0) => toggleView ? MyUserGridView() : MyUserListView(),
+      signedInBuilder: (_) => toggleView ? MyUserGridView() : MyUserListView(),
+      signedOutBuilder: (_) => Text(
+        'Please log in to view data',
+        style: TextStyle(color: Theme.of(context).colorScheme.error),
+      ),
     );
   }
 }

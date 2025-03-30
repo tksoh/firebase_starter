@@ -2,9 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthStateChangesBuilder extends StatelessWidget {
-  const AuthStateChangesBuilder({super.key, required this.itemBuilder});
+  const AuthStateChangesBuilder({
+    super.key,
+    required this.signedInBuilder,
+    this.signedOutBuilder,
+  });
 
-  final Widget Function(BuildContext) itemBuilder;
+  final Widget Function(BuildContext) signedInBuilder;
+  final Widget Function(BuildContext)? signedOutBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class AuthStateChangesBuilder extends StatelessWidget {
         if (snapshot.hasData) {
           final user = snapshot.data!.email;
           debugPrint('Logged in as $user');
-          return itemBuilder(context);
+          return signedInBuilder(context);
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
@@ -24,10 +29,11 @@ class AuthStateChangesBuilder extends StatelessWidget {
           );
         } else {
           return Center(
-            child: Text(
-              'Please log in to view data',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
+            child: signedOutBuilder?.call(context) ??
+                Text(
+                  'Signed Out!',
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
           );
         }
       },
