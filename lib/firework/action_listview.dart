@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'query_builder.dart';
 
-class ActionListView<T> extends StatefulWidget {
+class FirestoreActionListView<T> extends StatefulWidget {
   final Query<T> query;
   final Widget Function(BuildContext, QueryDocumentSnapshot<T>) itemBuilder;
   final void Function(String id, T data)? deleteAction;
   final void Function(String id, T data)? editAction;
   final bool debug;
 
-  const ActionListView({
+  const FirestoreActionListView({
     super.key,
     required this.query,
     required this.itemBuilder,
@@ -20,10 +20,12 @@ class ActionListView<T> extends StatefulWidget {
   });
 
   @override
-  State<ActionListView<T>> createState() => _ActionListViewState<T>();
+  State<FirestoreActionListView<T>> createState() =>
+      _FirestoreActionListViewState<T>();
 }
 
-class _ActionListViewState<T> extends State<ActionListView<T>> {
+class _FirestoreActionListViewState<T>
+    extends State<FirestoreActionListView<T>> {
   @override
   Widget build(BuildContext context) {
     return FirestoreSimpleListView<T>(

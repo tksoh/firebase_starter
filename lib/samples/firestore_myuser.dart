@@ -40,24 +40,24 @@ class MyUser extends DocumentBase with FirestoreCRUD {
       age: age ?? this.age,
     )..docTime.copyFrom(docTime);
   }
-}
 
-final myQuery = FirebaseFirestore.instance
-    .collection(MyUser.collection)
-    .orderBy('name')
-    .withConverter<MyUser>(
-      fromFirestore: (snapshot, _) =>
-          MyUser.fromJson(snapshot.data()!, id: snapshot.id),
-      toFirestore: (user, _) => user.toJson(),
-    );
+  static final query = FirebaseFirestore.instance
+      .collection(collection)
+      .orderBy('name')
+      .withConverter<MyUser>(
+        fromFirestore: (snapshot, _) =>
+            MyUser.fromJson(snapshot.data()!, id: snapshot.id),
+        toFirestore: (user, _) => user.toJson(),
+      );
+}
 
 class MyUserListView extends StatelessWidget {
   const MyUserListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ActionListView<MyUser>(
-      query: myQuery,
+    return FirestoreActionListView(
+      query: MyUser.query,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
         final created = user.docTime.createTime?.toDate();
@@ -92,7 +92,7 @@ class MyUserGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreActionGridView(
-      query: myQuery,
+      query: MyUser.query,
       itemBuilder: (context, index, data) {
         final user = data;
         final created = user.docTime.createTime?.toDate();
