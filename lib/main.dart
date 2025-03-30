@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_starter/samples/firestore_users.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 import 'drawer.dart';
+import 'firework/auth_builder.dart';
 import 'samples/firestore_myuser.dart';
 
 void main() async {
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: MyDrawer(),
-      body: toggleView ? MyUserGridView() : MyUserListView(),
+      body: dataView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           userCount++;
@@ -71,6 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  Widget dataView() {
+    return AuthStateChangesBuilder(
+      itemBuilder: (p0) => toggleView ? MyUserGridView() : MyUserListView(),
     );
   }
 }

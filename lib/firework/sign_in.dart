@@ -12,10 +12,9 @@ class SignInTile extends StatefulWidget {
 class _SignInTileState extends State<SignInTile> {
   @override
   Widget build(BuildContext context) {
-    final name =
-        FirebaseAuth.instance.currentUser == null
-            ? 'Logged out'
-            : FirebaseAuth.instance.currentUser!.displayName;
+    final name = FirebaseAuth.instance.currentUser == null
+        ? 'Logged out'
+        : FirebaseAuth.instance.currentUser!.displayName;
 
     final providers = [EmailAuthProvider()];
 
@@ -54,11 +53,9 @@ class _SignInTileState extends State<SignInTile> {
         Navigator.pop(context); // close drawer
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder:
-                (context) =>
-                    FirebaseAuth.instance.currentUser == null
-                        ? signInPage
-                        : profilePage,
+            builder: (context) => FirebaseAuth.instance.currentUser == null
+                ? signInPage
+                : profilePage,
           ),
         );
       },
