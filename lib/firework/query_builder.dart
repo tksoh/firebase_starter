@@ -36,6 +36,14 @@ class _FirestoreSimpleQueryBuilderState<T>
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text(
+            'DATABASE ERROR:\n${snapshot.error}',
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Theme.of(context).colorScheme.error),
+          );
         } else if (snapshot.hasData) {
           return widget.itemBuilder(context, snapshot);
         } else {
