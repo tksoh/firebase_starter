@@ -132,7 +132,7 @@ class MyUserGridView extends StatelessWidget {
         final newuser = data.copyWith(age: data.age + 1);
         newuser.updateData(id);
       },
-      debug: false,
+      debug: true,
     );
   }
 }

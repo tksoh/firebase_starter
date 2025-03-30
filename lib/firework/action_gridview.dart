@@ -49,10 +49,27 @@ class FirestoreActionGridView<T> extends StatelessWidget {
                     icon: Icon(Icons.edit_outlined),
                   ),
               ],
-            )
+            ),
+            if (debug) FittedBox(child: debugInfo(docId, context)),
           ],
         );
       },
+    );
+  }
+
+  Widget debugInfo(String docId, BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        child: Text(
+          'ID: $docId',
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: Theme.of(context).colorScheme.error),
+        ),
+      ),
     );
   }
 }
