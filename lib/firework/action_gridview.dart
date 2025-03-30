@@ -30,30 +30,37 @@ class FirestoreActionGridView<T> extends StatelessWidget {
         final docId = snapshot.id;
         final data = snapshot.data();
 
-        return Column(
-          children: [
-            Expanded(
-              child: itemBuilder(context, index, data),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (deleteAction != null)
-                  IconButton(
-                    onPressed: () => deleteAction?.call(docId, data),
-                    icon: Icon(Icons.delete_outlined),
-                  ),
-                if (editAction != null)
-                  IconButton(
-                    onPressed: () => editAction?.call(docId, data),
-                    icon: Icon(Icons.edit_outlined),
-                  ),
-              ],
-            ),
-            if (debug) FittedBox(child: debugInfo(docId, context)),
-          ],
+        return Container(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          child: Column(
+            children: [
+              Expanded(
+                child: itemBuilder(context, index, data),
+              ),
+              actionButtons(docId, data),
+              if (debug) FittedBox(child: debugInfo(docId, context)),
+            ],
+          ),
         );
       },
+    );
+  }
+
+  Widget actionButtons(String docId, data) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (deleteAction != null)
+          IconButton(
+            onPressed: () => deleteAction?.call(docId, data),
+            icon: Icon(Icons.delete_outlined),
+          ),
+        if (editAction != null)
+          IconButton(
+            onPressed: () => editAction?.call(docId, data),
+            icon: Icon(Icons.edit_outlined),
+          ),
+      ],
     );
   }
 

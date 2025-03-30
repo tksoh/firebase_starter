@@ -69,10 +69,7 @@ class FirestoreSimpleGridView<T> extends StatelessWidget {
           gridDelegate: gridDelegate,
           itemCount: list?.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              child: itemBuilder(context, index, list![index]),
-            );
+            return itemBuilder(context, index, list![index]);
           },
         );
       },
