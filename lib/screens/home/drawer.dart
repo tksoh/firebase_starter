@@ -1,3 +1,4 @@
+import 'package:firebase_starter/screens/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 import '/firework/sign_in.dart';
@@ -28,10 +29,11 @@ class _MyDrawerState extends State<MyDrawer> {
             child: SignInTile(),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            title: const Text('Settings'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SettingsPage(),
+              ));
             },
           ),
           ListTile(

@@ -12,10 +12,14 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Settings')),
-      body: Column(
+      body: ListView(
         children: [
-          Text('some setting #1'),
-          Text('some setting #1'),
+          ListTile(
+            title: Text('some setting #1'),
+          ),
+          ListTile(
+            title: Text('some setting #2'),
+          ),
         ],
       ),
     );
