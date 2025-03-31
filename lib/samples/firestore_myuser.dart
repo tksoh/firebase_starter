@@ -74,12 +74,12 @@ class MyUserListView extends StatelessWidget {
       },
       deleteAction: (id, data) {
         debugPrint('deleting user: id=$id');
-        data.deleteData(id);
+        data.deleteDocument(id);
       },
       editAction: (id, data) {
         debugPrint('updating user: id=$id');
         final newuser = data.copyWith(age: data.age + 1);
-        newuser.updateData(id);
+        newuser.updateDocument(id);
       },
       debug: true,
     );
@@ -124,12 +124,12 @@ class MyUserGridView extends StatelessWidget {
       ),
       deleteAction: (id, data) {
         debugPrint('deleting user: id=$id');
-        data.deleteData(id);
+        data.deleteDocument(id);
       },
       editAction: (id, data) {
         debugPrint('updating user: id=$id');
         final newuser = data.copyWith(age: data.age + 1);
-        newuser.updateData(id);
+        newuser.updateDocument(id);
       },
       debug: true,
     );

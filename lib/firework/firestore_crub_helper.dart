@@ -8,21 +8,21 @@ abstract class DocumentBase {
 }
 
 mixin FirestoreCRUD on DocumentBase {
-  void createData() {
+  void createDocument() {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc();
     ref.set(toJson());
   }
 
-  void deleteData(String id) {
+  void deleteDocument(String id) {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc(id);
     ref.delete();
   }
 
-  void updateData(String id) {
+  void updateDocument(String id) {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc(id);

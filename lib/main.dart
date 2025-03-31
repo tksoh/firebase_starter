@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           userCount++;
           final user = MyUser(name: 'user $userCount', age: 10 + userCount);
-          user.createData();
+          user.createDocument();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
