@@ -2,7 +2,8 @@ import 'package:firebase_starter/firework/auth_builder.dart';
 import 'package:firebase_starter/screens/home/drawer.dart';
 import 'package:flutter/material.dart';
 
-import '/samples/firestore_myuser.dart';
+import 'myuser/models.dart';
+import 'myuser/views.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
