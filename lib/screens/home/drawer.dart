@@ -1,7 +1,7 @@
 import 'package:firebase_starter/screens/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
-import '/firework/sign_in.dart';
+import '/firework/ui/sign_in.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});

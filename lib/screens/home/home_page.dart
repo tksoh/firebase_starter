@@ -1,7 +1,7 @@
-import 'package:firebase_starter/firework/auth_builder.dart';
 import 'package:firebase_starter/screens/home/drawer.dart';
 import 'package:flutter/material.dart';
 
+import '/firework/ui/auth_builder.dart';
 import 'myuser/models.dart';
 import 'myuser/views.dart';
 

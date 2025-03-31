@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/firework/action_gridview.dart';
-import '/firework/action_listview.dart';
+import '/firework/ui/action_gridview.dart';
+import '/firework/ui/action_listview.dart';
 import 'models.dart';
 
 class MyUserListView extends StatelessWidget {
