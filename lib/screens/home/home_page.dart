@@ -1,4 +1,4 @@
-import 'package:firebase_starter/screens/home/drawer.dart';
+import 'package:firebase_starter/drawer.dart';
 import 'package:flutter/material.dart';
 
 import '/firework/ui/auth_builder.dart';
