@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_starter/firework/action_gridview.dart';
 import 'package:flutter/material.dart';
 
-import '../firework/action_listview.dart';
-import '../firework/firestore_crub_helper.dart';
-import '../models/doc_time.dart';
+import '../../firework/action_listview.dart';
+import '../../firework/firestore_crub_helper.dart';
+import '../../models/doc_time.dart';
 
 class MyUser extends DocumentBase with FirestoreCRUD {
   static String collection = "my-collection";
