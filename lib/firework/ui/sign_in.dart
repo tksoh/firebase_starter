@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-class SignInTile extends StatefulWidget {
-  const SignInTile({super.key});
+class SignInDrawerTile extends StatefulWidget {
+  const SignInDrawerTile({super.key});
 
   @override
-  State<SignInTile> createState() => _SignInTileState();
+  State<SignInDrawerTile> createState() => _SignInDrawerTileState();
 }
 
-class _SignInTileState extends State<SignInTile> {
+class _SignInDrawerTileState extends State<SignInDrawerTile> {
   @override
   Widget build(BuildContext context) {
     final name = FirebaseAuth.instance.currentUser == null

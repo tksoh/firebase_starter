@@ -26,7 +26,7 @@ class _MyDrawerState extends State<MyDrawer> {
             decoration: BoxDecoration(
                 // color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-            child: SignInTile(),
+            child: SignInDrawerTile(),
           ),
           ListTile(
             title: const Text('Settings'),
