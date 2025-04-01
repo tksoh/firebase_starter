@@ -1,7 +1,7 @@
-import 'package:firebase_starter/screens/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 import 'sign_in.dart';
+import '/screens/settings/settings_page.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
