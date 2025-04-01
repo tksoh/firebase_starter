@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/firework/ui/auth_builder.dart';
+import '/firework/views/auth_builder.dart';
 import '/drawer/drawer.dart';
 import 'myuser/myuser_models.dart';
 import 'myuser/myuser_views.dart';
