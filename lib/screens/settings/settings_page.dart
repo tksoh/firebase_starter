@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../config/theme.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -14,11 +16,15 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(title: Text('Settings')),
       body: ListView(
         children: [
-          ListTile(
-            title: Text('some setting #1'),
-          ),
-          ListTile(
-            title: Text('some setting #2'),
+          SwitchListTile(
+            title: const Text('Dark mode'),
+            value: ThemeConfig.isDarkMode.value,
+            onChanged: (value) {
+              ThemeConfig.isDarkMode.value = !ThemeConfig.isDarkMode.value;
+              // TODO: save dark mode preference
+              // UserPreferences.saveDarkMode(ThemeConfig.isDarkMode.value);
+              setState(() {});
+            },
           ),
         ],
       ),

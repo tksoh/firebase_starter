@@ -1,3 +1,4 @@
+import 'package:firebase_starter/config/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'drawer/drawer.dart';
@@ -8,14 +9,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Firebase Starter',
-      themeMode: ThemeMode.dark,
-      darkTheme: ThemeData.dark(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: RootPage(),
+    return ValueListenableBuilder(
+      valueListenable: ThemeConfig.isDarkMode,
+      builder: (context, value, child) {
+        return MaterialApp(
+          title: 'Firebase Starter',
+          themeMode: ThemeConfig.appThemeMode,
+          darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          ),
+          home: RootPage(),
+        );
+      },
     );
   }
 }
