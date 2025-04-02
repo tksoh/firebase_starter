@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'sign_in.dart';
-import '/screens/settings/settings_page.dart';
+import 'widgets/sign_in.dart';
+import '../screens/settings/settings_page.dart';
+import 'widgets/drawer_menu.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -21,29 +22,30 @@ class _MyDrawerState extends State<MyDrawer> {
         padding: EdgeInsets.zero,
         children: [
           SizedBox(height: stbarHeight),
-          DrawerHeader(
+          const DrawerHeader(
             padding: EdgeInsets.all(0),
-            decoration: BoxDecoration(
-                // color: Theme.of(context).colorScheme.inversePrimary,
-                ),
             child: SignInDrawerTile(),
           ),
-          ListTile(
-            title: const Text('Settings'),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SettingsPage(),
-              ));
-            },
+          DrawerMenuBuilder(
+            text: 'Setting',
+            icon: Icons.settings,
+            // action: showMaterialPage(SettingsPage()),
+            action: () => showPage(SettingsPage()),
           ),
-          ListTile(
-            title: const Text('Item 2'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
+          DrawerMenuBuilder(
+            text: 'About',
+            icon: Icons.info_outline,
+            action: () => showAboutDialog(context: context),
           ),
         ],
+      ),
+    );
+  }
+
+  void showPage(Widget page) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => page,
       ),
     );
   }
