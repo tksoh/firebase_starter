@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final _asyncPrefs = SharedPreferencesAsync();
 
 class ThemeConfig {
   ThemeConfig._();
@@ -14,4 +17,12 @@ class ThemeConfig {
         Brightness.dark => Colors.white,
         Brightness.light => Colors.black
       };
+
+  static Future<void> saveDarkmodeSetting() async {
+    await _asyncPrefs.setBool('darkmode', isDarkMode.value);
+  }
+
+  static Future<void> getDarkmodeSetting() async {
+    isDarkMode.value = await _asyncPrefs.getBool('darkmode') ?? false;
+  }
 }

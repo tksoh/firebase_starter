@@ -21,8 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
             value: ThemeConfig.isDarkMode.value,
             onChanged: (value) {
               ThemeConfig.isDarkMode.value = !ThemeConfig.isDarkMode.value;
-              // TODO: save dark mode preference
-              // UserPreferences.saveDarkMode(ThemeConfig.isDarkMode.value);
+              ThemeConfig.saveDarkmodeSetting();
               setState(() {});
             },
           ),
