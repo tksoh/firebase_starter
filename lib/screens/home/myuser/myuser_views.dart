@@ -70,7 +70,7 @@ class MyUserGridView extends StatelessWidget {
           ],
         );
       },
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,

@@ -38,11 +38,11 @@ class _FirestoreActionListViewState<T>
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              icon: Icon(Icons.delete_outlined),
+              icon: const Icon(Icons.delete_outlined),
               onPressed: () => widget.deleteAction?.call(docId, data),
             ),
             IconButton(
-              icon: Icon(Icons.edit_outlined),
+              icon: const Icon(Icons.edit_outlined),
               onPressed: () => widget.editAction?.call(docId, data),
             ),
           ],
@@ -57,7 +57,7 @@ class _FirestoreActionListViewState<T>
           ],
         );
       },
-      separatorBuilder: (_, index) => Divider(),
+      separatorBuilder: (_, index) => const Divider(),
     );
   }
 
@@ -65,7 +65,7 @@ class _FirestoreActionListViewState<T>
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
         child: Text(
           'ID: $docId',
           style: Theme.of(context)

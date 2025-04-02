@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: dataView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -51,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget dataView() {
     return AuthStateChangesBuilder(
-      signedInBuilder: (_) => toggleView ? MyUserGridView() : MyUserListView(),
+      signedInBuilder: (_) =>
+          toggleView ? const MyUserGridView() : const MyUserListView(),
       signedOutBuilder: (_) => Text(
         'Please log in to view data',
         style: TextStyle(color: Theme.of(context).colorScheme.error),

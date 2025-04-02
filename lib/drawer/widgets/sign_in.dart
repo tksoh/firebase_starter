@@ -43,11 +43,11 @@ class _SignInDrawerTileState extends State<SignInDrawerTile> {
     );
 
     return ListTile(
-      leading: Icon(Icons.person),
+      leading: const Icon(Icons.person),
       title: Text(name!),
       subtitle: Text(
         FirebaseAuth.instance.currentUser == null ? 'Log in' : 'View profile',
-        style: TextStyle(decoration: TextDecoration.underline),
+        style: const TextStyle(decoration: TextDecoration.underline),
       ),
       onTap: () {
         Navigator.pop(context); // close drawer

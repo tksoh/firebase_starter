@@ -53,12 +53,12 @@ class FirestoreActionGridView<T> extends StatelessWidget {
         if (deleteAction != null)
           IconButton(
             onPressed: () => deleteAction?.call(docId, data),
-            icon: Icon(Icons.delete_outlined),
+            icon: const Icon(Icons.delete_outlined),
           ),
         if (editAction != null)
           IconButton(
             onPressed: () => editAction?.call(docId, data),
-            icon: Icon(Icons.edit_outlined),
+            icon: const Icon(Icons.edit_outlined),
           ),
       ],
     );
@@ -68,7 +68,7 @@ class FirestoreActionGridView<T> extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
         child: Text(
           'ID: $docId',
           style: Theme.of(context)

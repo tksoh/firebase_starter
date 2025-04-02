@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          home: RootPage(),
+          home: const RootPage(),
         );
       },
     );
@@ -31,9 +31,9 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       drawer: MyDrawer(),
-      body: const MyHomePage(title: 'Firebase Starter'),
+      body: MyHomePage(title: 'Firebase Starter'),
     );
   }
 }

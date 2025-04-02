@@ -30,7 +30,7 @@ class _MyDrawerState extends State<MyDrawer> {
             text: 'Setting',
             icon: Icons.settings,
             // action: showMaterialPage(SettingsPage()),
-            action: () => showPage(SettingsPage()),
+            action: () => showPage(const SettingsPage()),
           ),
           DrawerMenuBuilder(
             text: 'About',
