@@ -18,7 +18,7 @@ class MyUserListView extends StatelessWidget {
         final name = user.name;
         final age = user.age;
         return ListTile(
-          title: Text('$name => $age'),
+          title: Text('$name @ $age'),
           subtitle: Text(
             'Added: $created\nUpdated: $updated',
             style: Theme.of(context).textTheme.bodySmall,
