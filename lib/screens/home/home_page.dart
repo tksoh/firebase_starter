@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_starter/screens/myuser_add_user/myuser_add_user_view.dart';
 import 'package:flutter/material.dart';
 
@@ -39,11 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: dataView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if (FirebaseAuth.instance.currentUser == null) return;
+
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const MyUserAddUser(),
           ));
         },
-        tooltip: 'Increment',
+        tooltip: 'Add user',
         child: const Icon(Icons.add),
       ),
     );
