@@ -1,8 +1,8 @@
+import 'package:firebase_starter/screens/myuser_add_user/myuser_add_user_view.dart';
 import 'package:flutter/material.dart';
 
 import '/firework/views/auth_builder.dart';
 import '/drawer/drawer.dart';
-import 'myuser/myuser_models.dart';
 import 'myuser/myuser_views.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -39,9 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: dataView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          userCount++;
-          final user = MyUser(name: 'user $userCount', age: 10 + userCount);
-          user.createDocument();
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const MyUserAddUser(),
+          ));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
