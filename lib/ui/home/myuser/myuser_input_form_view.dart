@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../home/myuser/myuser_models.dart';
-import '../widgets/inputs.dart';
+import '../../../domain/repositories/myuser_models.dart';
+import '../../core/ui/inputs.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
   const MyUserUserFormPage({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../myuser_edit/myuser_input_form_view.dart';
-import '../../widgets/dialogs.dart';
-import '/firework/views/action_gridview.dart';
-import '/firework/views/action_listview.dart';
-import 'myuser_models.dart';
+import 'myuser_input_form_view.dart';
+import '../../core/ui/dialogs.dart';
+import '../../core/ui/firestore_ui/action_gridview.dart';
+import '../../core/ui/firestore_ui/action_listview.dart';
+import '../../../domain/repositories/myuser_models.dart';
 
 class MyUserListView extends StatelessWidget {
   const MyUserListView({super.key});

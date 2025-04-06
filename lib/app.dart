@@ -1,8 +1,8 @@
-import 'package:firebase_starter/config/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'drawer/drawer.dart';
-import '/screens/home/home_page.dart';
+import 'config/theme.dart';
+import 'ui/drawer/drawer.dart';
+import 'ui/home/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

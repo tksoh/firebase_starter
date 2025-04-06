@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/sign_in.dart';
-import '../screens/settings/settings_page.dart';
 import 'widgets/drawer_menu.dart';
+import '../settings/settings_page.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});

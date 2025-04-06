@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '/firework/models/firestore_crub_helper.dart';
-import '/firework/models/doc_time.dart';
+import '../services/firestore_crub_helper.dart';
+import '../services/doc_time.dart';
 
 class MyUser extends DocumentBase with FirestoreCRUD {
   static String collection = "my-collection";
