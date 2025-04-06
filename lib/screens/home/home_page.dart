@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_starter/screens/myuser_add_user/myuser_add_user_view.dart';
+import 'package:firebase_starter/screens/myuser_edit/myuser_input_form_view.dart';
 import 'package:flutter/material.dart';
 
 import '/firework/views/auth_builder.dart';
