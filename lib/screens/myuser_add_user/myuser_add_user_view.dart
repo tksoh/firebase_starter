@@ -3,16 +3,30 @@ import 'package:flutter/material.dart';
 import '../home/myuser/myuser_models.dart';
 import '../widgets/inputs.dart';
 
-class MyUserAddUser extends StatefulWidget {
-  const MyUserAddUser({super.key});
+class MyUserUserFormPage extends StatefulWidget {
+  const MyUserUserFormPage({
+    super.key,
+    this.updateUser,
+    this.updateId,
+  });
+
+  final MyUser? updateUser;
+  final String? updateId;
 
   @override
-  State<MyUserAddUser> createState() => _MyUserAddUserState();
+  State<MyUserUserFormPage> createState() => _MyUserUserFormPageState();
 }
 
-class _MyUserAddUserState extends State<MyUserAddUser> {
+class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
   final nameCtrl = TextEditingController();
   final ageCtrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nameCtrl.text = widget.updateUser?.name ?? '';
+    ageCtrl.text = widget.updateUser?.age.toString() ?? '';
+  }
 
   @override
   void dispose() {
@@ -51,7 +65,11 @@ class _MyUserAddUserState extends State<MyUserAddUser> {
                     name: nameCtrl.text,
                     age: int.parse(ageCtrl.text),
                   );
-                  user.createDocument();
+                  if (widget.updateId == null) {
+                    user.createDocument();
+                  } else {
+                    user.updateDocument(widget.updateId!);
+                  }
                   Navigator.pop(context);
                 } catch (error) {
                   showDialog(
@@ -62,7 +80,7 @@ class _MyUserAddUserState extends State<MyUserAddUser> {
                   );
                 }
               },
-              child: const Text('Add User'))
+              child: Text(widget.updateId == null ? 'Add' : 'Update'))
         ],
       ),
     );

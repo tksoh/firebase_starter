@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../myuser_add_user/myuser_add_user_view.dart';
 import '/firework/views/action_gridview.dart';
 import '/firework/views/action_listview.dart';
 import 'myuser_models.dart';
@@ -31,8 +32,10 @@ class MyUserListView extends StatelessWidget {
       },
       editAction: (id, data) {
         debugPrint('updating user: id=$id');
-        final newuser = data.copyWith(age: data.age + 1);
-        newuser.updateDocument(id);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              MyUserUserFormPage(updateId: id, updateUser: data),
+        ));
       },
       debug: true,
     );

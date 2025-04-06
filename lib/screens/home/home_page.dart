@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if (FirebaseAuth.instance.currentUser == null) return;
 
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const MyUserAddUser(),
+            builder: (context) => const MyUserUserFormPage(),
           ));
         },
         tooltip: 'Add user',
