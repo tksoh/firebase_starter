@@ -8,7 +8,8 @@ class MyUserUserFormPage extends StatefulWidget {
     super.key,
     this.updateUser,
     this.updateId,
-  });
+  }) : assert((updateId == null && updateUser == null) ||
+            (updateId != null && updateUser != null));
 
   final MyUser? updateUser;
   final String? updateId;
