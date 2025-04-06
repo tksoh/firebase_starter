@@ -90,14 +90,27 @@ class MyUserGridView extends StatelessWidget {
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,
       ),
-      deleteAction: (id, data) {
+      deleteAction: (id, data) async {
         debugPrint('deleting user: id=$id');
-        data.deleteDocument(id);
+        final resp = await showDialog(
+          context: context,
+          builder: (context) => const SimpleConfirmDialog(
+            title: 'Delete User',
+            content: 'Confirm?',
+            actionTextList: ['Cancel', 'Yes'],
+          ),
+        );
+
+        if (resp == 'Yes') {
+          data.deleteDocument(id);
+        }
       },
       editAction: (id, data) {
         debugPrint('updating user: id=$id');
-        final newuser = data.copyWith(age: data.age + 1);
-        newuser.updateDocument(id);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              MyUserUserFormPage(updateId: id, updateUser: data),
+        ));
       },
       debug: true,
     );
