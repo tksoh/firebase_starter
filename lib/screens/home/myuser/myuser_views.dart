@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../myuser_edit/myuser_input_form_view.dart';
+import '../../widgets/dialogs.dart';
 import '/firework/views/action_gridview.dart';
 import '/firework/views/action_listview.dart';
 import 'myuser_models.dart';
@@ -26,9 +27,20 @@ class MyUserListView extends StatelessWidget {
           ),
         );
       },
-      deleteAction: (id, data) {
+      deleteAction: (id, data) async {
         debugPrint('deleting user: id=$id');
-        data.deleteDocument(id);
+        final resp = await showDialog(
+          context: context,
+          builder: (context) => const SimpleConfirmDialog(
+            title: 'Delete User',
+            content: 'Confirm?',
+            actionTextList: ['Cancel', 'Yes'],
+          ),
+        );
+
+        if (resp == 'Yes') {
+          data.deleteDocument(id);
+        }
       },
       editAction: (id, data) {
         debugPrint('updating user: id=$id');
