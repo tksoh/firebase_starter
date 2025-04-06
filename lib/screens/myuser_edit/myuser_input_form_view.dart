@@ -40,7 +40,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New User'),
+        title: Text(widget.updateId == null ? 'New User' : 'Update User'),
       ),
       body: Column(
         children: [
