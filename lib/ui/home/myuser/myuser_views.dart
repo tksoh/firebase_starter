@@ -39,7 +39,7 @@ class MyUserListView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          data.deleteDocument(id);
+          data.deleteDocument();
         }
       },
       editAction: (id, data) {
@@ -102,7 +102,7 @@ class MyUserGridView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          data.deleteDocument(id);
+          data.deleteDocument();
         }
       },
       editAction: (id, data) {

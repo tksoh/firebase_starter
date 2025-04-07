@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class DocumentBase {
   String get collectionPath;
+  String? documentId;
 
   Map<String, Object?> toJson();
 }
@@ -15,17 +16,23 @@ mixin FirestoreCRUD on DocumentBase {
     ref.set(toJson());
   }
 
-  void deleteDocument(String id) {
+  void deleteDocument() {
+    assert(documentId != null);
+
     if (FirebaseAuth.instance.currentUser == null) return;
 
-    final ref = FirebaseFirestore.instance.collection(collectionPath).doc(id);
+    final ref =
+        FirebaseFirestore.instance.collection(collectionPath).doc(documentId);
     ref.delete();
   }
 
-  void updateDocument(String id) {
+  void updateDocument() {
+    assert(documentId != null);
+
     if (FirebaseAuth.instance.currentUser == null) return;
 
-    final ref = FirebaseFirestore.instance.collection(collectionPath).doc(id);
+    final ref =
+        FirebaseFirestore.instance.collection(collectionPath).doc(documentId);
     ref.update(toJson());
   }
 }

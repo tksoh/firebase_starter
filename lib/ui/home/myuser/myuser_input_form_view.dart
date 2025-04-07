@@ -62,14 +62,18 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           FilledButton(
               onPressed: () {
                 try {
-                  final user = MyUser(
-                    name: nameCtrl.text,
-                    age: int.parse(ageCtrl.text),
-                  );
                   if (widget.updateId == null) {
+                    final user = MyUser(
+                      name: nameCtrl.text,
+                      age: int.parse(ageCtrl.text),
+                    );
                     user.createDocument();
                   } else {
-                    user.updateDocument(widget.updateId!);
+                    final user = widget.updateUser!.copyWith(
+                      name: nameCtrl.text,
+                      age: int.parse(ageCtrl.text),
+                    );
+                    user.updateDocument();
                   }
                   Navigator.pop(context);
                 } catch (error) {

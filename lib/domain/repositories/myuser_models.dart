@@ -25,6 +25,13 @@ class MyUser extends DocumentBase with FirestoreCRUD {
     };
   }
 
+  factory MyUser.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final user = MyUser.fromJson(snapshot.data()!, id: snapshot.id);
+    user.documentId = snapshot.id;
+    return user;
+  }
+
   MyUser.fromJson(Map<String, Object?> json, {String? id})
       : name = json['name']! as String,
         age = json['age']! as int {
@@ -35,15 +42,16 @@ class MyUser extends DocumentBase with FirestoreCRUD {
     return MyUser(
       name: name ?? this.name,
       age: age ?? this.age,
-    )..docTime.copyFrom(docTime);
+    )
+      ..docTime.copyFrom(docTime)
+      ..documentId = documentId;
   }
 
   static final query = FirebaseFirestore.instance
       .collection(collection)
       .orderBy('name')
       .withConverter<MyUser>(
-        fromFirestore: (snapshot, _) =>
-            MyUser.fromJson(snapshot.data()!, id: snapshot.id),
+        fromFirestore: (snapshot, _) => MyUser.fromFirestore(snapshot),
         toFirestore: (user, _) => user.toJson(),
       );
 }
