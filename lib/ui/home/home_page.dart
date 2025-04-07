@@ -18,6 +18,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int userCount = 0;
   bool toggleView = false;
+  final showFab = ValueNotifier<bool>(true);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             onPressed: () {
               setState(() {
+                showFab.value = true;
                 toggleView = !toggleView;
               });
             },
@@ -37,25 +39,59 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: const MyDrawer(),
-      body: dataView(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (FirebaseAuth.instance.currentUser == null) return;
+      body: buildDataView(),
+      floatingActionButton: buildFab(),
+    );
+  }
 
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const MyUserUserFormPage(),
-          ));
-        },
-        tooltip: 'Add user',
-        child: const Icon(Icons.add),
+  Widget buildFab() {
+    return ValueListenableBuilder(
+      valueListenable: showFab,
+      builder: (context, value, child) => AnimatedSlide(
+        duration: const Duration(milliseconds: 300),
+        offset: showFab.value ? Offset.zero : const Offset(0, 2),
+        child: FloatingActionButton(
+          onPressed: () {
+            if (FirebaseAuth.instance.currentUser == null) return;
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const MyUserUserFormPage(),
+            ));
+          },
+          tooltip: 'Add user',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
 
-  Widget dataView() {
+  Widget buildDataView() {
+    // ignore: prefer_const_constructors
+    Widget view = toggleView ? MyUserGridView() : MyUserListView();
+
+    // listen to scroll position in order to hide/show FAB button
+    view = NotificationListener<ScrollEndNotification>(
+      onNotification: (scrollEnd) {
+        final metrics = scrollEnd.metrics;
+        if (metrics.atEdge) {
+          bool isTop = metrics.pixels == 0;
+          if (isTop) {
+            debugPrint('At the top');
+            showFab.value = true;
+          } else {
+            debugPrint('At the bottom');
+            showFab.value = false;
+          }
+        } else if (showFab.value == false) {
+          showFab.value = true;
+        }
+        return true;
+      },
+      child: view,
+    );
+
     return AuthStateChangesBuilder(
-      // ignore: prefer_const_constructors
-      signedInBuilder: (_) => toggleView ? MyUserGridView() : MyUserListView(),
+      signedInBuilder: (_) => view,
       signedOutBuilder: (_) => Text(
         'Please log in to view data',
         style: TextStyle(color: Theme.of(context).colorScheme.error),
