@@ -1,21 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../services/firestore_crub_helper.dart';
-import '../services/doc_time.dart';
+import 'doc_base.dart';
+import 'doc_time.dart';
 
-class MyUser extends DocumentBase with FirestoreCRUD {
-  static String collection = "my-collection";
-
+class MyUser extends DocumentBase {
   // user data
   final String name;
   final int age;
 
+  // document meta data
   final docTime = FirestoreDocumentTime();
 
   MyUser({required this.name, required this.age});
-
-  @override
-  String get collectionPath => collection;
 
   @override
   Map<String, Object?> toJson() {
@@ -27,12 +23,12 @@ class MyUser extends DocumentBase with FirestoreCRUD {
 
   factory MyUser.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final user = MyUser.fromJson(snapshot.data()!, id: snapshot.id);
+    final user = MyUser.fromJson(snapshot.data()!);
     user.documentId = snapshot.id;
     return user;
   }
 
-  MyUser.fromJson(Map<String, Object?> json, {String? id})
+  MyUser.fromJson(Map<String, Object?> json)
       : name = json['name']! as String,
         age = json['age']! as int {
     docTime.fromJson(json);
@@ -43,15 +39,7 @@ class MyUser extends DocumentBase with FirestoreCRUD {
       name: name ?? this.name,
       age: age ?? this.age,
     )
-      ..docTime.copyFrom(docTime)
-      ..documentId = documentId;
+      ..documentId = documentId
+      ..docTime.copyFrom(docTime);
   }
-
-  static final query = FirebaseFirestore.instance
-      .collection(collection)
-      .orderBy('name')
-      .withConverter<MyUser>(
-        fromFirestore: (snapshot, _) => MyUser.fromFirestore(snapshot),
-        toFirestore: (user, _) => user.toJson(),
-      );
 }

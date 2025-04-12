@@ -1,6 +1,7 @@
+import 'package:firebase_starter/domain/models/myuser_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/repositories/myuser_models.dart';
+import '../../../data/repositories/myuser_repo.dart';
 import '../../core/ui/inputs.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
@@ -67,13 +68,13 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    user.createDocument();
+                    myUserRepo.crud.createDocument(user);
                   } else {
                     final user = widget.updateUser!.copyWith(
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    user.updateDocument();
+                    myUserRepo.crud.updateDocument(user);
                   }
                   Navigator.pop(context);
                 } catch (error) {

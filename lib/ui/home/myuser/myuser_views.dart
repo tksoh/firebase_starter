@@ -4,7 +4,7 @@ import 'myuser_input_form_view.dart';
 import '../../core/ui/dialogs.dart';
 import '../../core/ui/firestore_ui/action_gridview.dart';
 import '../../core/ui/firestore_ui/action_listview.dart';
-import '../../../domain/repositories/myuser_models.dart';
+import '../../../data/repositories/myuser_repo.dart';
 
 class MyUserListView extends StatelessWidget {
   const MyUserListView({super.key});
@@ -12,7 +12,7 @@ class MyUserListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreActionListView(
-      query: MyUser.query,
+      query: MyUserRepo.query,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
         final created = user.docTime.createTime?.toDate();
@@ -39,7 +39,7 @@ class MyUserListView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          data.deleteDocument();
+          myUserRepo.crud.deleteDocument(data);
         }
       },
       editAction: (id, data) {
@@ -60,7 +60,7 @@ class MyUserGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreActionGridView(
-      query: MyUser.query,
+      query: MyUserRepo.query,
       itemBuilder: (context, index, data) {
         final user = data;
         final created = user.docTime.createTime?.toDate();
@@ -102,7 +102,7 @@ class MyUserGridView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          data.deleteDocument();
+          myUserRepo.crud.deleteDocument(data);
         }
       },
       editAction: (id, data) {
