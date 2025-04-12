@@ -9,7 +9,7 @@ final myUserRepo = MyUserRepo();
 class MyUserRepo {
   static String collection = "my-collection";
 
-  final crudService = FirestoreCRUD(collectionPath: collection);
+  final _crudService = FirestoreCRUD(collectionPath: collection);
 
   Query<MyUser> get query => FirebaseFirestore.instance
       .collection(collection)
@@ -18,4 +18,25 @@ class MyUserRepo {
         fromFirestore: (snapshot, _) => MyUser.fromFirestore(snapshot),
         toFirestore: (user, _) => user.toJson(),
       );
+
+  void updateUserData(
+      {required MyUser from, required String name, required int age}) {
+    final user = from.copyWith(
+      name: name,
+      age: age,
+    );
+    _crudService.updateDocument(user);
+  }
+
+  void addUserData({required String name, required int age}) {
+    final user = MyUser(
+      name: name,
+      age: age,
+    );
+    _crudService.createDocument(user);
+  }
+
+  void deleteUserData(MyUser user) {
+    _crudService.deleteDocument(user);
+  }
 }

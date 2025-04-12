@@ -64,17 +64,16 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
               onPressed: () {
                 try {
                   if (widget.updateId == null) {
-                    final user = MyUser(
+                    myUserRepo.addUserData(
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    myUserRepo.crudService.createDocument(user);
                   } else {
-                    final user = widget.updateUser!.copyWith(
+                    myUserRepo.updateUserData(
+                      from: widget.updateUser!,
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    myUserRepo.crudService.updateDocument(user);
                   }
                   Navigator.pop(context);
                 } catch (error) {

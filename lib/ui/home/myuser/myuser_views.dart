@@ -39,7 +39,7 @@ class MyUserListView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          myUserRepo.crudService.deleteDocument(data);
+          myUserRepo.deleteUserData(data);
         }
       },
       editAction: (id, data) {
@@ -102,7 +102,7 @@ class MyUserGridView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          myUserRepo.crudService.deleteDocument(data);
+          myUserRepo.deleteUserData(data);
         }
       },
       editAction: (id, data) {
