@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/models/doc_base.dart';
+import '../../domain/models/core/doc_base.dart';
 
 class FirestoreCRUD {
   final String collectionPath;
