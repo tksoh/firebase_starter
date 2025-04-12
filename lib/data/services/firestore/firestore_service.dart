@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/models/core/doc_base.dart';
+import 'firestore_document.dart';
 
 class FirestoreCRUD {
   final String collectionPath;
@@ -11,14 +11,14 @@ class FirestoreCRUD {
     required this.collectionPath,
   });
 
-  void createDocument(DocumentBase doc) {
+  void createDocument(FirestoreDocument doc) {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc();
     ref.set(doc.toJson());
   }
 
-  void deleteDocument(DocumentBase doc) {
+  void deleteDocument(FirestoreDocument doc) {
     assert(doc.documentId != null);
 
     if (FirebaseAuth.instance.currentUser == null) return;
@@ -29,7 +29,7 @@ class FirestoreCRUD {
     ref.delete();
   }
 
-  void updateDocument(DocumentBase doc) {
+  void updateDocument(FirestoreDocument doc) {
     assert(doc.documentId != null);
 
     if (FirebaseAuth.instance.currentUser == null) return;

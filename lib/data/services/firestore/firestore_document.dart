@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+abstract class FirestoreDocument {
+  String? documentId;
+
+  Map<String, Object?> toJson();
+}
+
 class FirestoreDocumentTime {
   Timestamp? createTime;
   Timestamp? updateTime;

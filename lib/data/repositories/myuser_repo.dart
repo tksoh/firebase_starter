@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/models/myuser_model.dart';
-import '../services/firestore_crud.dart';
+import '../services/firestore/firestore_service.dart';
 
 final myUserRepo = MyUserRepo();
 

@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'core/doc_base.dart';
-import 'core/doc_time.dart';
+import '../../data/services/firestore/firestore_document.dart';
 
-class MyUser extends DocumentBase {
+class MyUser extends FirestoreDocument {
   // user data
   final String name;
   final int age;
