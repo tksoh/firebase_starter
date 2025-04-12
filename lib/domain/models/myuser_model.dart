@@ -7,38 +7,27 @@ class MyUser extends FirestoreDocument {
   final String name;
   final int age;
 
-  // document meta data
-  final docTime = FirestoreDocumentTime();
-
   MyUser({required this.name, required this.age});
 
   @override
   Map<String, Object?> toJson() {
-    return {
-      ...{'name': name, 'age': age},
-      ...docTime.toJson(),
-    };
+    return {'name': name, 'age': age};
   }
 
   factory MyUser.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final user = MyUser.fromJson(snapshot.data()!);
-    user.documentId = snapshot.id;
-    return user;
+    var json = snapshot.data()!;
+    return MyUser.fromJson(json)..metadata.fromJson(json, id: snapshot.id);
   }
 
   MyUser.fromJson(Map<String, Object?> json)
       : name = json['name']! as String,
-        age = json['age']! as int {
-    docTime.fromJson(json);
-  }
+        age = json['age']! as int;
 
   MyUser copyWith({String? name, int? age}) {
     return MyUser(
       name: name ?? this.name,
       age: age ?? this.age,
-    )
-      ..documentId = documentId
-      ..docTime.copyFrom(docTime);
+    )..metadata.copyFrom(metadata);
   }
 }

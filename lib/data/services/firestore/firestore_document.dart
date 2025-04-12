@@ -1,16 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirestoreDocument {
-  String? documentId;
+  final metadata = FirestoreDocumentTime();
 
   Map<String, Object?> toJson();
+
+  Map<String, Object?> toJsonWithMetadata() {
+    return {
+      ...toJson(),
+      ...metadata.toJson(),
+    };
+  }
 }
 
 class FirestoreDocumentTime {
   Timestamp? createTime;
   Timestamp? updateTime;
+  String? documentId;
 
-  fromJson(Map<String, Object?> json) {
+  fromJson(Map<String, Object?> json, {String? id}) {
+    documentId = id;
     updateTime =
         json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
     createTime =
@@ -30,5 +39,6 @@ class FirestoreDocumentTime {
 
     updateTime = from.updateTime;
     createTime = from.createTime;
+    documentId = from.documentId;
   }
 }

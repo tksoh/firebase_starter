@@ -15,8 +15,8 @@ class MyUserListView extends StatelessWidget {
       query: myUserRepo.query,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
-        final created = user.docTime.createTime?.toDate();
-        final updated = user.docTime.updateTime?.toDate();
+        final created = user.metadata.createTime?.toDate();
+        final updated = user.metadata.updateTime?.toDate();
         final name = user.name;
         final age = user.age;
         return ListTile(
@@ -63,8 +63,8 @@ class MyUserGridView extends StatelessWidget {
       query: myUserRepo.query,
       itemBuilder: (context, index, data) {
         final user = data;
-        final created = user.docTime.createTime?.toDate();
-        final updated = user.docTime.updateTime?.toDate();
+        final created = user.metadata.createTime?.toDate();
+        final updated = user.metadata.updateTime?.toDate();
         final name = user.name;
         final age = user.age;
         return Column(

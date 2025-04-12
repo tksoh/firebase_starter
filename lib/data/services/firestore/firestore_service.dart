@@ -15,28 +15,28 @@ class FirestoreCRUD {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc();
-    ref.set(doc.toJson());
+    ref.set(doc.toJsonWithMetadata());
   }
 
   void deleteDocument(FirestoreDocument doc) {
-    assert(doc.documentId != null);
+    assert(doc.metadata.documentId != null);
 
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance
         .collection(collectionPath)
-        .doc(doc.documentId);
+        .doc(doc.metadata.documentId);
     ref.delete();
   }
 
   void updateDocument(FirestoreDocument doc) {
-    assert(doc.documentId != null);
+    assert(doc.metadata.documentId != null);
 
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final ref = FirebaseFirestore.instance
         .collection(collectionPath)
-        .doc(doc.documentId);
-    ref.update(doc.toJson());
+        .doc(doc.metadata.documentId);
+    ref.update(doc.toJsonWithMetadata());
   }
 }
