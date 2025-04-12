@@ -68,13 +68,13 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    myUserRepo.crud.createDocument(user);
+                    myUserRepo.crudService.createDocument(user);
                   } else {
                     final user = widget.updateUser!.copyWith(
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
                     );
-                    myUserRepo.crud.updateDocument(user);
+                    myUserRepo.crudService.updateDocument(user);
                   }
                   Navigator.pop(context);
                 } catch (error) {

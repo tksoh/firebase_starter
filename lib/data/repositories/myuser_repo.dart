@@ -8,9 +8,10 @@ final myUserRepo = MyUserRepo();
 
 class MyUserRepo {
   static String collection = "my-collection";
-  final crud = FirestoreCRUD(collectionPath: collection);
 
-  static final query = FirebaseFirestore.instance
+  final crudService = FirestoreCRUD(collectionPath: collection);
+
+  Query<MyUser> get query => FirebaseFirestore.instance
       .collection(collection)
       .orderBy('name')
       .withConverter<MyUser>(

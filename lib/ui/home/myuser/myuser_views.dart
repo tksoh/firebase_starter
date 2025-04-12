@@ -12,7 +12,7 @@ class MyUserListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreActionListView(
-      query: MyUserRepo.query,
+      query: myUserRepo.query,
       itemBuilder: (context, snapshot) {
         final user = snapshot.data();
         final created = user.docTime.createTime?.toDate();
@@ -39,7 +39,7 @@ class MyUserListView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          myUserRepo.crud.deleteDocument(data);
+          myUserRepo.crudService.deleteDocument(data);
         }
       },
       editAction: (id, data) {
@@ -60,7 +60,7 @@ class MyUserGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreActionGridView(
-      query: MyUserRepo.query,
+      query: myUserRepo.query,
       itemBuilder: (context, index, data) {
         final user = data;
         final created = user.docTime.createTime?.toDate();
@@ -102,7 +102,7 @@ class MyUserGridView extends StatelessWidget {
         );
 
         if (resp == 'Yes') {
-          myUserRepo.crud.deleteDocument(data);
+          myUserRepo.crudService.deleteDocument(data);
         }
       },
       editAction: (id, data) {
