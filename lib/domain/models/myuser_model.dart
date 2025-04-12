@@ -7,7 +7,9 @@ class MyUser extends FirestoreDocument {
   final String name;
   final int age;
 
-  MyUser({required this.name, required this.age});
+  MyUser({required this.name, required this.age}) {
+    metadata = FirestoreDocumentTime();
+  }
 
   @override
   Map<String, Object?> toJson() {
@@ -17,7 +19,8 @@ class MyUser extends FirestoreDocument {
   factory MyUser.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     var json = snapshot.data()!;
-    return MyUser.fromJson(json)..metadata.fromJson(json, id: snapshot.id);
+    return MyUser.fromJson(json)
+      ..metadata = FirestoreDocumentTime.fromJson(json, id: snapshot.id);
   }
 
   MyUser.fromJson(Map<String, Object?> json)

@@ -1,7 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirestoreDocument {
-  final metadata = FirestoreDocumentTime();
+  late final FirestoreDocumentTime metadata; // = FirestoreDocumentTime();
 
   Map<String, Object?> toJson();
 
@@ -18,7 +19,13 @@ class FirestoreDocumentTime {
   Timestamp? updateTime;
   String? documentId;
 
-  fromJson(Map<String, Object?> json, {String? id}) {
+  FirestoreDocumentTime({
+    this.createTime,
+    this.updateTime,
+    this.documentId,
+  });
+
+  FirestoreDocumentTime.fromJson(Map<String, Object?> json, {String? id}) {
     documentId = id;
     updateTime =
         json['_updateTime_'] == null ? null : json['_updateTime_'] as Timestamp;
@@ -34,9 +41,7 @@ class FirestoreDocumentTime {
     };
   }
 
-  void copyFrom(FirestoreDocumentTime? from) {
-    if (from == null) return;
-
+  void copyFrom(FirestoreDocumentTime from) {
     updateTime = from.updateTime;
     createTime = from.createTime;
     documentId = from.documentId;
