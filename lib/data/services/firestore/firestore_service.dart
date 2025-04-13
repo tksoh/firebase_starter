@@ -13,7 +13,7 @@ class FirestoreCRUD {
   FirestoreCRUD({
     required this.collection,
     this.byUser = false,
-    this.userCollection = "users",
+    this.userCollection = "user-repository",
   });
 
   bool get signedIn => AuthService.signedIn;
