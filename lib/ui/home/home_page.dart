@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/services/firebase_auth.dart';
 import '../core/ui/auth_builder.dart';
 import '../drawer/drawer.dart';
 import 'myuser/myuser_views.dart';
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         offset: showFab.value ? Offset.zero : const Offset(0, 2),
         child: FloatingActionButton(
           onPressed: () {
-            if (FirebaseAuth.instance.currentUser == null) return;
+            if (AuthService.signedOut) return;
 
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const MyUserUserFormPage(),
