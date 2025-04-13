@@ -97,9 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return AuthStateChangesBuilder(
       signedInBuilder: (_) => view,
-      signedOutBuilder: (_) => Text(
-        'Please log in to view data',
-        style: TextStyle(color: Theme.of(context).colorScheme.error),
+      signedOutBuilder: (_) => Center(
+        child: Text(
+          'Please log in to view data',
+          style: TextStyle(color: Theme.of(context).colorScheme.error),
+        ),
       ),
     );
   }

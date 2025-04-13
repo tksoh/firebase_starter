@@ -28,13 +28,13 @@ class AuthStateChangesBuilder extends StatelessWidget {
             ),
           );
         } else {
-          return Center(
-            child: signedOutBuilder?.call(context) ??
-                Text(
+          return signedOutBuilder?.call(context) ??
+              Center(
+                child: Text(
                   'Signed Out!',
                   style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
-          );
+              );
         }
       },
     );
