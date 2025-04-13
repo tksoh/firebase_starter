@@ -5,14 +5,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'firestore_document.dart';
 
 class FirestoreCRUD {
-  final String collectionPath;
+  final String collection;
+  final bool byUser;
+  final String userCollection;
 
   FirestoreCRUD({
-    required this.collectionPath,
+    required this.collection,
+    this.byUser = false,
+    this.userCollection = "users",
   });
 
+  bool get signedIn => FirebaseAuth.instance.currentUser != null;
+
+  String get collectionPath {
+    if (byUser) {
+      assert(signedIn);
+      final userid = FirebaseAuth.instance.currentUser!.uid;
+      return '$userCollection/$userid/$collection';
+    } else {
+      return collection;
+    }
+  }
+
   void createDocument(FirestoreDocument doc) {
-    if (FirebaseAuth.instance.currentUser == null) return;
+    assert((byUser && signedIn) || !byUser);
 
     final ref = FirebaseFirestore.instance.collection(collectionPath).doc();
     ref.set(doc.toJsonWithMetadata());
@@ -20,8 +36,7 @@ class FirestoreCRUD {
 
   void deleteDocument(FirestoreDocument doc) {
     assert(doc.metadata.documentId != null);
-
-    if (FirebaseAuth.instance.currentUser == null) return;
+    assert((byUser && signedIn) || !byUser);
 
     final ref = FirebaseFirestore.instance
         .collection(collectionPath)
@@ -31,8 +46,7 @@ class FirestoreCRUD {
 
   void updateDocument(FirestoreDocument doc) {
     assert(doc.metadata.documentId != null);
-
-    if (FirebaseAuth.instance.currentUser == null) return;
+    assert((byUser && signedIn) || !byUser);
 
     final ref = FirebaseFirestore.instance
         .collection(collectionPath)
