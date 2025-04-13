@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildFab() {
-    return ValueListenableBuilder(
+    final fab = ValueListenableBuilder(
       valueListenable: showFab,
       builder: (context, value, child) => AnimatedSlide(
         duration: const Duration(milliseconds: 300),
@@ -62,6 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.add),
         ),
       ),
+    );
+
+    return AuthStateChangesBuilder(
+      signedInBuilder: (p0) => fab,
+      signedOutBuilder: (p0) => Container(),
     );
   }
 
