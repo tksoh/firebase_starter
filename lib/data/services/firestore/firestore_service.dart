@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_starter/data/services/firebase_auth.dart';
 
+import '../firebase_auth.dart';
 import 'firestore_document.dart';
 
 class FirestoreCRUD {

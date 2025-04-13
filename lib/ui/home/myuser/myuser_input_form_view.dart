@@ -1,6 +1,6 @@
-import 'package:firebase_starter/domain/models/myuser_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/models/myuser_model.dart';
 import '../../../data/repositories/myuser_repo.dart';
 import '../../core/ui/inputs.dart';
 
