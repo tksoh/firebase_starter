@@ -7,7 +7,7 @@ import '../services/firestore/firestore_service.dart';
 final myUserRepo = MyUserRepo();
 
 class MyUserRepo {
-  static String collection = "users";
+  static String collection = "my-users";
 
   final _crudService = FirestoreCRUD(collection: collection, byUser: true);
 
