@@ -9,11 +9,10 @@ final myUserRepo = MyUserRepo();
 class MyUserRepo {
   static String collection = "users";
 
-  FirestoreCRUD get crudService =>
-      FirestoreCRUD(collection: collection, byUser: true);
+  final _crudService = FirestoreCRUD(collection: collection, byUser: true);
 
   Query<MyUser> get query => FirebaseFirestore.instance
-      .collection(crudService.collectionPath)
+      .collection(_crudService.collectionPath)
       .orderBy('name')
       .withConverter<MyUser>(
         fromFirestore: (snapshot, _) => MyUser.fromFirestore(snapshot),
@@ -27,7 +26,7 @@ class MyUserRepo {
       age: age,
     );
 
-    crudService.updateDocument(user);
+    _crudService.updateDocument(user);
   }
 
   void addUserData({required String name, required int age}) {
@@ -36,10 +35,10 @@ class MyUserRepo {
       age: age,
     );
 
-    crudService.createDocument(user);
+    _crudService.createDocument(user);
   }
 
   void deleteUserData(MyUser user) {
-    crudService.deleteDocument(user);
+    _crudService.deleteDocument(user);
   }
 }
