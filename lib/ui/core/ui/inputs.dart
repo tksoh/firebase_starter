@@ -78,22 +78,19 @@ class NumbericInputState extends State<NumbericInput> {
     final textColor =
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        style: hasError
-            ? TextStyle(color: errorColor, fontSize: 14)
-            : TextStyle(color: textColor, fontSize: 14),
-        enabled: widget.enabled,
-        controller: widget.controller,
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-        ],
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: widget.label,
-        ),
+    return TextFormField(
+      style: hasError
+          ? TextStyle(color: errorColor, fontSize: 14)
+          : TextStyle(color: textColor, fontSize: 14),
+      enabled: widget.enabled,
+      controller: widget.controller,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+      ],
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      decoration: InputDecoration(
+        border: const UnderlineInputBorder(),
+        labelText: widget.label,
       ),
     );
   }
