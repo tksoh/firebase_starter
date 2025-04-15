@@ -100,20 +100,26 @@ class DateInput extends StatefulWidget {
   const DateInput({
     super.key,
     required this.label,
-    this.controller,
+    required this.controller,
     this.formatter,
   });
 
   final String label;
-  final TextEditingController? controller;
   final DateFormat? formatter;
+  final DateTimeEditingController controller;
 
   @override
   State<DateInput> createState() => _DateInputState();
 }
 
 class _DateInputState extends State<DateInput> {
-  final dateCtrl = DateTimeEditingController(DateTime.now());
+  final dateCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    dateCtrl.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +128,7 @@ class _DateInputState extends State<DateInput> {
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
     return GestureDetector(
       onTap: () {
-        selectNewDate(dateCtrl);
+        selectNewDate();
       },
       child: TextFormField(
         style: TextStyle(color: textColor),
@@ -141,14 +147,13 @@ class _DateInputState extends State<DateInput> {
     );
   }
 
-  void selectNewDate(DateTimeEditingController textCtrl,
-      {DateTime? initDate}) async {
+  void selectNewDate({DateTime? initDate}) async {
     final date = await pickDateTime(initDate: initDate);
-    final formatter = widget.formatter ?? DateFormat('d/M/y hh:mm:ss a');
+    // final formatter = widget.formatter ?? DateFormat('d/M/y hh:mm:ss a');
     if (date != null) {
       setState(() {
-        textCtrl.data = date;
-        widget.controller?.text = formatter.format(date);
+        dateCtrl.text = widget.controller.text; // formatter.format(date);
+        widget.controller.data = date;
       });
     }
   }

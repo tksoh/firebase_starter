@@ -20,20 +20,22 @@ class MyUserRepo {
       );
 
   void updateUserData(
-      {required MyUser from, required String name, required int age}) {
+      {required MyUser from,
+      required String name,
+      required int age,
+      required Timestamp registered}) {
     final user = from.copyWith(
       name: name,
       age: age,
+      registered: registered,
     );
 
     _crudService.updateDocument(user);
   }
 
-  void addUserData({required String name, required int age}) {
-    final user = MyUser(
-      name: name,
-      age: age,
-    );
+  void addUserData(
+      {required String name, required int age, required Timestamp registered}) {
+    final user = MyUser(name: name, age: age, registered: registered);
 
     _crudService.createDocument(user);
   }

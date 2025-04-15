@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'myuser_input_form_view.dart';
 import '../../core/ui/dialogs.dart';
@@ -19,8 +20,10 @@ class MyUserListView extends StatelessWidget {
         final updated = user.metadata.updateTime?.toDate();
         final name = user.name;
         final age = user.age;
+        final date =
+            DateFormat('d/M/y hh:mma').format(user.registered.toDate());
         return ListTile(
-          title: Text('$name @ $age'),
+          title: Text('$name @ $age\nRegistered on: $date'),
           subtitle: Text(
             'Added: $created\nUpdated: $updated',
             style: Theme.of(context).textTheme.bodySmall,

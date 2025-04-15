@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/models/myuser_model.dart';
 import '../../../data/repositories/myuser_repo.dart';
+import '../../core/ui/editable.dart';
 import '../../core/ui/inputs.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
@@ -22,13 +25,17 @@ class MyUserUserFormPage extends StatefulWidget {
 class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
   final nameCtrl = TextEditingController();
   final ageCtrl = TextEditingController();
-  final dateCtrl = TextEditingController();
+  final dateCtrl = DateTimeEditingController(
+    null,
+    toText: (p0) => DateFormat('d/M/y hh:mm a').format(p0!),
+  );
 
   @override
   void initState() {
     super.initState();
     nameCtrl.text = widget.updateUser?.name ?? '';
     ageCtrl.text = widget.updateUser?.age.toString() ?? '';
+    dateCtrl.data = widget.updateUser?.registered.toDate() ?? DateTime.now();
   }
 
   @override
@@ -77,12 +84,18 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
                     myUserRepo.addUserData(
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
+                      registered: Timestamp.fromDate(
+                        dateCtrl.data ?? DateTime.now(),
+                      ),
                     );
                   } else {
                     myUserRepo.updateUserData(
                       from: widget.updateUser!,
                       name: nameCtrl.text,
                       age: int.parse(ageCtrl.text),
+                      registered: Timestamp.fromDate(
+                        dateCtrl.data ?? DateTime.now(),
+                      ),
                     );
                   }
                   Navigator.pop(context);
