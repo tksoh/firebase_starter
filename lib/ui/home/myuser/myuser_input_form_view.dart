@@ -54,7 +54,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SimpleTextInput(
+            child: NumbericInput(
               label: 'Age',
               controller: ageCtrl,
             ),
