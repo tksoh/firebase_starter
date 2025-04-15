@@ -9,15 +9,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final seedColor = Colors.deepPurple;
+
     return ValueListenableBuilder(
       valueListenable: ThemeConfig.isDarkMode,
       builder: (context, value, child) {
         return MaterialApp(
           title: 'Firebase Starter',
           themeMode: ThemeConfig.appThemeMode,
-          darkTheme: ThemeData.dark(),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: seedColor, brightness: Brightness.dark),
+            brightness: Brightness.dark,
+          ),
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
           ),
           home: const RootPage(),
         );
