@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 
 import '../../../domain/models/myuser_model.dart';
 import '../../../data/repositories/myuser_repo.dart';
-import '../../core/ui/editable.dart';
-import '../../core/ui/inputs.dart';
+import '../../core/ui/inputs/date.dart';
+import '../../core/ui/inputs/controllers.dart';
+import '../../core/ui/inputs/text.dart';
+import '../../core/ui/inputs/numeric.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
   const MyUserUserFormPage({
