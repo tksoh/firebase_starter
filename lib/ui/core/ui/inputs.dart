@@ -27,11 +27,13 @@ class NumbericInput extends StatefulWidget {
   final bool enabled;
   final String? label;
   final TextEditingController? controller;
+  final bool integer;
 
   const NumbericInput({
     this.label,
     this.controller,
     this.enabled = true,
+    this.integer = false,
     super.key,
   });
 
@@ -58,6 +60,8 @@ class NumbericInputState extends State<NumbericInput> {
     final value = widget.controller!.text;
     if (value == '') {
       hasError = false;
+    } else if (widget.integer) {
+      hasError = int.tryParse(value) == null;
     } else {
       hasError = double.tryParse(value) == null;
     }

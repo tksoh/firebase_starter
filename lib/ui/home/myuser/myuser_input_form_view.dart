@@ -57,6 +57,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
             child: NumbericInput(
               label: 'Age',
               controller: ageCtrl,
+              integer: true,
             ),
           ),
           const SizedBox(height: 20),
