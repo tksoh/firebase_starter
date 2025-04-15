@@ -117,15 +117,24 @@ class _DateInputState extends State<DateInput> {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    final textColor =
+        themeData.brightness == Brightness.light ? Colors.black : Colors.white;
     return GestureDetector(
       onTap: () {
         selectNewDate(dateCtrl);
       },
       child: TextFormField(
+        style: TextStyle(color: textColor),
         controller: widget.controller,
         decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
+          disabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: themeData.dividerColor),
+          ),
           labelText: widget.label,
+          labelStyle: TextStyle(
+            color: themeData.colorScheme.onSecondaryContainer,
+          ),
         ),
         enabled: false,
       ),
