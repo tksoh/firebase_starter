@@ -22,6 +22,7 @@ class MyUserUserFormPage extends StatefulWidget {
 class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
   final nameCtrl = TextEditingController();
   final ageCtrl = TextEditingController();
+  final dateCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
     super.dispose();
     nameCtrl.dispose();
     ageCtrl.dispose();
+    dateCtrl.dispose();
   }
 
   @override
@@ -58,6 +60,13 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
               label: 'Age',
               controller: ageCtrl,
               integer: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DateInput(
+              label: 'Date',
+              controller: dateCtrl,
             ),
           ),
           const SizedBox(height: 20),
