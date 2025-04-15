@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirestoreDocument {
-  final metadata = FirestoreDocumentTime();
+  final metadata = FirestoreDocumentMetadata();
 
   Map<String, Object?> toJson();
 
@@ -14,12 +14,12 @@ abstract class FirestoreDocument {
   }
 }
 
-class FirestoreDocumentTime {
+class FirestoreDocumentMetadata {
   Timestamp? createTime;
   Timestamp? updateTime;
   String? documentId;
 
-  FirestoreDocumentTime({
+  FirestoreDocumentMetadata({
     this.createTime,
     this.updateTime,
     this.documentId,
@@ -43,7 +43,7 @@ class FirestoreDocumentTime {
     };
   }
 
-  void copyFrom(FirestoreDocumentTime from) {
+  void copyFrom(FirestoreDocumentMetadata from) {
     updateTime = from.updateTime;
     createTime = from.createTime;
     documentId = from.documentId;
