@@ -25,7 +25,10 @@ class _OptionInputState extends State<OptionInput> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.label),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(widget.label),
+        ),
         SegmentedButton(
           segments: widget.options
               .map((e) => ButtonSegment<String>(value: e, label: Text(e)))
