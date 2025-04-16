@@ -53,7 +53,7 @@ class NumbericInputState extends State<NumbericInput> {
     final textColor =
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
     final filterPattern =
-        widget.integer ? RegExp(r'[-\d]') : RegExp(r'[-\d\.]');
+        widget.integer ? RegExp(r'^\-?[\d]*') : RegExp(r'^\-?\d*\.?\d*');
 
     return TextFormField(
       style: hasError
