@@ -95,6 +95,11 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           FilledButton(
               onPressed: () {
                 try {
+                  if (selectedOptions.isEmpty ||
+                      selectedOptions.first != 'YES') {
+                    return;
+                  }
+
                   if (widget.updateId == null) {
                     myUserRepo.addUserData(
                       name: nameCtrl.text,
