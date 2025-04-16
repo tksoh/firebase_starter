@@ -52,7 +52,8 @@ class NumbericInputState extends State<NumbericInput> {
     final errorColor = themeData.colorScheme.error;
     final textColor =
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
-    final filterPattern = widget.integer ? RegExp(r'[\d]') : RegExp(r'[\d\.]');
+    final filterPattern =
+        widget.integer ? RegExp(r'[-\d]') : RegExp(r'[-\d\.]');
 
     return TextFormField(
       style: hasError
