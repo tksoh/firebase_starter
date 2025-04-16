@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_starter/ui/core/ui/inputs/options.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,6 +32,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
     null,
     toText: (p0) => DateFormat('d/M/y hh:mm a').format(p0!),
   );
+  final Set<String> selectedOptions = {};
 
   @override
   void initState() {
@@ -79,6 +81,14 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
               label: 'Date',
               controller: dateCtrl,
               hintText: 'pick a date',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OptionInput(
+              label: 'Are you sure',
+              options: ['YES', 'NO'],
+              selected: selectedOptions,
             ),
           ),
           const SizedBox(height: 20),
