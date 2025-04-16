@@ -23,11 +23,17 @@ class OptionInput extends StatefulWidget {
 class _OptionInputState extends State<OptionInput> {
   @override
   Widget build(BuildContext context) {
+    // set label color per labelStyle getter of _InputDecoratorDefaultsM3
+    // class in flutter's input_decorator.dart
+    final themeData = Theme.of(context);
+    final labelColor = themeData.colorScheme.onSurfaceVariant;
+    final labelStyle =
+        themeData.textTheme.labelMedium?.copyWith(color: labelColor);
     return Column(
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          child: Text(widget.label),
+          child: Text(widget.label, style: labelStyle),
         ),
         SegmentedButton(
           segments: widget.options
