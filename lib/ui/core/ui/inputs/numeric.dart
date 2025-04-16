@@ -56,11 +56,11 @@ class NumbericInputState extends State<NumbericInput> {
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
     final filterPattern =
         widget.integer ? RegExp(r'^\-?[\d]*') : RegExp(r'^\-?\d*\.?\d*');
+    var textStyle =
+        hasError ? TextStyle(color: errorColor) : TextStyle(color: textColor);
 
     return TextFormField(
-      style: hasError
-          ? TextStyle(color: errorColor, fontSize: 14)
-          : TextStyle(color: textColor, fontSize: 14),
+      style: textStyle,
       enabled: widget.enabled,
       controller: widget.controller,
       inputFormatters: [FilteringTextInputFormatter.allow(filterPattern)],
