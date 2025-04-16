@@ -34,6 +34,14 @@ class _OptionInputState extends State<OptionInput> {
           onSelectionChanged: updateSelected,
           emptySelectionAllowed: true,
           multiSelectionEnabled: widget.selectMultiple,
+          // direction: Axis.vertical,
+          style: ButtonStyle(
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+            ),
+          ),
         ),
       ],
     );
