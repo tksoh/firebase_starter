@@ -52,6 +52,7 @@ class NumbericInputState extends State<NumbericInput> {
     final errorColor = themeData.colorScheme.error;
     final textColor =
         themeData.brightness == Brightness.light ? Colors.black : Colors.white;
+    final filterPattern = widget.integer ? RegExp(r'[\d]') : RegExp(r'[\d\.]');
 
     return TextFormField(
       style: hasError
@@ -59,9 +60,7 @@ class NumbericInputState extends State<NumbericInput> {
           : TextStyle(color: textColor, fontSize: 14),
       enabled: widget.enabled,
       controller: widget.controller,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-      ],
+      inputFormatters: [FilteringTextInputFormatter.allow(filterPattern)],
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
