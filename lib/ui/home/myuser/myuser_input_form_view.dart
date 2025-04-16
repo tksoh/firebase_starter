@@ -61,6 +61,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
             child: SimpleTextInput(
               label: 'Name',
               controller: nameCtrl,
+              hintText: 'enter name here',
             ),
           ),
           Padding(
@@ -69,6 +70,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
               label: 'Age',
               controller: ageCtrl,
               integer: true,
+              hintText: 'enter age here',
             ),
           ),
           Padding(
@@ -76,6 +78,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
             child: DateInput(
               label: 'Date',
               controller: dateCtrl,
+              hintText: 'pick a date',
             ),
           ),
           const SizedBox(height: 20),

@@ -6,13 +6,15 @@ class NumbericInput extends StatefulWidget {
   final String? label;
   final TextEditingController? controller;
   final bool integer;
+  final String? hintText;
 
   const NumbericInput({
+    super.key,
     this.label,
     this.controller,
     this.enabled = true,
     this.integer = false,
-    super.key,
+    this.hintText,
   });
 
   @override
@@ -66,6 +68,9 @@ class NumbericInputState extends State<NumbericInput> {
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         labelText: widget.label,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintText: widget.hintText,
+        hintStyle: const TextStyle(fontStyle: FontStyle.italic),
       ),
     );
   }

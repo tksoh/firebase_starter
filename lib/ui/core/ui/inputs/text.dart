@@ -5,10 +5,12 @@ class SimpleTextInput extends StatelessWidget {
     super.key,
     required this.label,
     this.controller,
+    this.hintText,
   });
 
   final String label;
   final TextEditingController? controller;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,9 @@ class SimpleTextInput extends StatelessWidget {
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         labelText: label,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintText: hintText,
+        hintStyle: const TextStyle(fontStyle: FontStyle.italic),
       ),
     );
   }

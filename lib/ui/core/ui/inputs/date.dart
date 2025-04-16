@@ -9,11 +9,13 @@ class DateInput extends StatefulWidget {
     required this.label,
     required this.controller,
     this.formatter,
+    this.hintText,
   });
 
   final String label;
   final DateFormat? formatter;
   final DateTimeEditingController controller;
+  final String? hintText;
 
   @override
   State<DateInput> createState() => _DateInputState();
@@ -48,6 +50,9 @@ class _DateInputState extends State<DateInput> {
           labelStyle: TextStyle(
             color: themeData.colorScheme.onSecondaryContainer,
           ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(fontStyle: FontStyle.italic),
         ),
         enabled: false,
       ),
