@@ -23,31 +23,28 @@ class OptionInput extends StatefulWidget {
 class _OptionInputState extends State<OptionInput> {
   @override
   Widget build(BuildContext context) {
-    // set label color per labelStyle getter of _InputDecoratorDefaultsM3
-    // class in flutter's input_decorator.dart
-    final themeData = Theme.of(context);
-    final labelColor = themeData.colorScheme.onSurfaceVariant;
-    final labelStyle =
-        themeData.textTheme.labelMedium?.copyWith(color: labelColor);
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(widget.label, style: labelStyle),
-        ),
-        SegmentedButton(
-          segments: widget.options
-              .map((e) => ButtonSegment<String>(value: e, label: Text(e)))
-              .toList(),
-          selected: widget.selected,
-          onSelectionChanged: updateSelected,
-          emptySelectionAllowed: true,
-          multiSelectionEnabled: widget.selectMultiple,
-          // direction: Axis.vertical,
-          style: ButtonStyle(
-            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-              const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+        InputDecorator(
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(borderSide: BorderSide.none),
+            labelText: widget.label,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+          ),
+          child: SegmentedButton(
+            segments: widget.options
+                .map((e) => ButtonSegment<String>(value: e, label: Text(e)))
+                .toList(),
+            selected: widget.selected,
+            onSelectionChanged: updateSelected,
+            emptySelectionAllowed: true,
+            multiSelectionEnabled: widget.selectMultiple,
+            // direction: Axis.vertical,
+            style: ButtonStyle(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
               ),
             ),
           ),
