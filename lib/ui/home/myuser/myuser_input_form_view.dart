@@ -95,8 +95,11 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           FilledButton(
               onPressed: () {
                 try {
-                  if (selectedOptions.isEmpty ||
-                      selectedOptions.first != 'YES') {
+                  if (!selectedOptions.contains('YES')) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Are you sure?'),
+                      duration: Duration(seconds: 2),
+                    ));
                     return;
                   }
 
