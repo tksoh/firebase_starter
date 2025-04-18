@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../extensions/math.dart';
 
 class NumbericInput extends StatefulWidget {
   final bool enabled;
@@ -7,6 +10,8 @@ class NumbericInput extends StatefulWidget {
   final TextEditingController? controller;
   final bool integer;
   final String? hintText;
+  final double? stepSize;
+  final int? decimals;
 
   const NumbericInput({
     super.key,
@@ -15,6 +20,8 @@ class NumbericInput extends StatefulWidget {
     this.enabled = true,
     this.integer = false,
     this.hintText,
+    this.stepSize,
+    this.decimals,
   });
 
   @override
@@ -71,7 +78,40 @@ class NumbericInputState extends State<NumbericInput> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         hintText: widget.hintText,
         hintStyle: const TextStyle(fontStyle: FontStyle.italic),
+        suffixIcon: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(icon: const Icon(Icons.remove), onPressed: decrement),
+            IconButton(icon: const Icon(Icons.add), onPressed: increment),
+          ],
+        ),
       ),
     );
+  }
+
+  void decrement() {
+    doMath('minus');
+  }
+
+  void increment() {
+    doMath('plus');
+  }
+
+  void doMath(String op) {
+    if (widget.stepSize == null || widget.controller == null) return;
+
+    final oldValue = double.tryParse(widget.controller!.text) ?? 0.0;
+    final newValue = op == 'plus'
+        ? oldValue + widget.stepSize!
+        : oldValue - widget.stepSize!;
+
+    if (widget.integer) {
+      widget.controller!.text = newValue.toInt().toString();
+    } else {
+      final decimals = widget.decimals == null
+          ? max(oldValue.decimals(), widget.stepSize!.decimals())
+          : widget.decimals!;
+      widget.controller!.text = newValue.fixed(decimals).toString();
+    }
   }
 }

@@ -72,6 +72,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
               label: 'Age',
               controller: ageCtrl,
               integer: true,
+              stepSize: 1,
               hintText: 'enter age here',
             ),
           ),
