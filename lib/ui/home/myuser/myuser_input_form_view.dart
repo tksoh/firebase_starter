@@ -95,47 +95,50 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           ),
           const SizedBox(height: 20),
           FilledButton(
-              onPressed: () {
-                try {
-                  if (!selectedOptions.contains('YES')) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Are you sure?'),
-                      duration: Duration(seconds: 2),
-                    ));
-                    return;
-                  }
-
-                  if (widget.updateId == null) {
-                    myUserRepo.addUserData(
-                      name: nameCtrl.text,
-                      age: int.parse(ageCtrl.text),
-                      registered: Timestamp.fromDate(
-                        dateCtrl.data ?? DateTime.now(),
-                      ),
-                    );
-                  } else {
-                    myUserRepo.updateUserData(
-                      from: widget.updateUser!,
-                      name: nameCtrl.text,
-                      age: int.parse(ageCtrl.text),
-                      registered: Timestamp.fromDate(
-                        dateCtrl.data ?? DateTime.now(),
-                      ),
-                    );
-                  }
-                  Navigator.pop(context);
-                } catch (error) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      content: Text('Error: $error'),
-                    ),
-                  );
-                }
-              },
-              child: Text(widget.updateId == null ? 'Add' : 'Update'))
+            onPressed: buttonAction,
+            child: Text(widget.updateId == null ? 'Add' : 'Update'),
+          )
         ],
       ),
     );
+  }
+
+  void buttonAction() {
+    try {
+      if (!selectedOptions.contains('YES')) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Are you sure?'),
+          duration: Duration(seconds: 2),
+        ));
+        return;
+      }
+
+      if (widget.updateId == null) {
+        myUserRepo.addUserData(
+          name: nameCtrl.text,
+          age: int.parse(ageCtrl.text),
+          registered: Timestamp.fromDate(
+            dateCtrl.data ?? DateTime.now(),
+          ),
+        );
+      } else {
+        myUserRepo.updateUserData(
+          from: widget.updateUser!,
+          name: nameCtrl.text,
+          age: int.parse(ageCtrl.text),
+          registered: Timestamp.fromDate(
+            dateCtrl.data ?? DateTime.now(),
+          ),
+        );
+      }
+      Navigator.pop(context);
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('Error: $error'),
+        ),
+      );
+    }
   }
 }
