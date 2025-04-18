@@ -30,7 +30,7 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
   final ageCtrl = TextEditingController();
   final dateCtrl = DateTimeEditingController(
     null,
-    toText: (p0) => DateFormat('d/M/y hh:mm a').format(p0!),
+    toText: (p0) => DateFormat('d/M/y').format(p0!),
   );
   final Set<String> selectedOptions = {};
 
@@ -78,10 +78,11 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: DateInput(
+            child: DateTimeInput(
               label: 'Date',
               controller: dateCtrl,
               hintText: 'pick a date',
+              mode: DateTimeInputMode.dateOnly,
             ),
           ),
           Padding(

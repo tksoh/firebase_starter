@@ -3,25 +3,33 @@ import 'package:intl/intl.dart';
 
 import 'controllers.dart';
 
-class DateInput extends StatefulWidget {
-  const DateInput({
+enum DateTimeInputMode {
+  dateOnly,
+  timeOnly,
+  dateAndTime,
+}
+
+class DateTimeInput extends StatefulWidget {
+  const DateTimeInput({
     super.key,
     required this.label,
     required this.controller,
     this.formatter,
     this.hintText,
+    this.mode = DateTimeInputMode.dateAndTime,
   });
 
   final String label;
   final DateFormat? formatter;
   final DateTimeEditingController controller;
   final String? hintText;
+  final DateTimeInputMode mode;
 
   @override
-  State<DateInput> createState() => _DateInputState();
+  State<DateTimeInput> createState() => _DateTimeInputState();
 }
 
-class _DateInputState extends State<DateInput> {
+class _DateTimeInputState extends State<DateTimeInput> {
   final dateCtrl = TextEditingController();
 
   @override
@@ -72,29 +80,64 @@ class _DateInputState extends State<DateInput> {
 
   Future<DateTime?> pickDateTime({DateTime? initDate}) async {
     final initialDate = initDate ?? DateTime.now();
+    DateTime? selectedDate;
+    TimeOfDay? selectedTime;
 
-    var selectedDate = await showDatePicker(
+    if (widget.mode == DateTimeInputMode.dateOnly) {
+      selectedDate = await showDatePicker(
+          context: context,
+          initialDate: initialDate,
+          firstDate: DateTime(2022),
+          lastDate: DateTime.now());
+      if (selectedDate == null) return null;
+
+      final now = DateTime.now();
+      return DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        now.hour,
+        now.minute,
+      );
+    } else if (widget.mode == DateTimeInputMode.timeOnly) {
+      selectedTime = await showTimePicker(
         context: context,
-        initialDate: initialDate,
-        firstDate: DateTime(2022),
-        lastDate: DateTime.now());
+        initialTime: TimeOfDay.fromDateTime(initialDate),
+      );
+      if (selectedTime == null) return null;
 
-    if (selectedDate == null) return null;
+      final now = DateTime.now();
+      return DateTime(
+        now.year,
+        now.month,
+        now.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+    } else {
+      // select both date and time
+      selectedDate = await showDatePicker(
+          context: context,
+          initialDate: initialDate,
+          firstDate: DateTime(2022),
+          lastDate: DateTime.now());
+      if (selectedDate == null) return null;
 
-    if (!mounted) return null;
-    var selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(initialDate),
-    );
+      if (!mounted) return null;
+      selectedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(initialDate),
+      );
 
-    return selectedTime == null
-        ? selectedDate
-        : DateTime(
-            selectedDate.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime.hour,
-            selectedTime.minute,
-          );
+      if (selectedTime == null) return null;
+
+      return DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+    }
   }
 }
