@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_starter/ui/core/ui/inputs/options.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,6 +8,7 @@ import '../../core/ui/inputs/datetime.dart';
 import '../../core/ui/inputs/controllers.dart';
 import '../../core/ui/inputs/text.dart';
 import '../../core/ui/inputs/numeric.dart';
+import '../../core/ui/inputs/options.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
   const MyUserUserFormPage({
