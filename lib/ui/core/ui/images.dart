@@ -1,3 +1,4 @@
+import 'package:firebase_cached_image/firebase_cached_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -22,18 +23,19 @@ class _FirebaseStorageImageState extends State<FirebaseStorageImage> {
   @override
   void initState() {
     super.initState();
-    getImage();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (image != null) {
-      return Image(
-        image: image!,
-      );
-    } else {
-      return widget.progressBuilder?.call() ?? Container();
-    }
+    return Image(
+      image: FirebaseImageProvider(
+        FirebaseUrl.fromReference(FirebaseStorage.instance.ref(widget.path)),
+        options: const CacheOptions(source: Source.server),
+      ),
+      loadingBuilder: (context, child, loadingProgress) {
+        return widget.progressBuilder?.call() ?? Container();
+      },
+    );
   }
 
   Future<void> getImage() async {
