@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_starter/ui/core/ui/images.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -58,6 +59,15 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
       ),
       body: Column(
         children: [
+          SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: FirebaseStorageImage(
+              path: 'images/IMG20210408083401-01.jpg',
+              progressBuilder: () =>
+                  const Center(child: Text('Loading image...')),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SimpleTextInput(
