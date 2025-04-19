@@ -17,7 +17,7 @@ class FirebaseStorageImage extends StatefulWidget {
 
 class _FirebaseStorageImageState extends State<FirebaseStorageImage> {
   final storage = FirebaseStorage.instance;
-  String imageUrl = '';
+  NetworkImage? image;
 
   @override
   void initState() {
@@ -27,9 +27,9 @@ class _FirebaseStorageImageState extends State<FirebaseStorageImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (imageUrl.isNotEmpty) {
+    if (image != null) {
       return Image(
-        image: NetworkImage(imageUrl),
+        image: image!,
       );
     } else {
       return widget.progressBuilder?.call() ?? Container();
@@ -38,7 +38,12 @@ class _FirebaseStorageImageState extends State<FirebaseStorageImage> {
 
   Future<void> getImage() async {
     final ref = storage.ref().child(widget.path);
-    imageUrl = await ref.getDownloadURL();
+    final imageUrl = await ref.getDownloadURL();
+
+    if (!mounted) return;
+    image = NetworkImage(imageUrl);
+    await precacheImage(image!, context);
+
     setState(() {});
   }
 }
