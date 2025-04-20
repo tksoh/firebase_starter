@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_starter/ui/core/ui/images.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,6 +10,7 @@ import '../../core/ui/inputs/controllers.dart';
 import '../../core/ui/inputs/text.dart';
 import '../../core/ui/inputs/numeric.dart';
 import '../../core/ui/inputs/options.dart';
+import '../../core/ui/images.dart';
 
 class MyUserUserFormPage extends StatefulWidget {
   const MyUserUserFormPage({
@@ -57,58 +58,71 @@ class _MyUserUserFormPageState extends State<MyUserUserFormPage> {
       appBar: AppBar(
         title: Text(widget.updateId == null ? 'New User' : 'Update User'),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 200,
-            child: FirebaseStorageImage(
-              path: 'images/IMG20210408083401-01.jpg',
-              progressBuilder: () =>
-                  const Center(child: Text('Loading image...')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              child: CachedNetworkImage(
+                imageUrl:
+                    'https://images.pexels.com/photos/31606432/pexels-photo-31606432/free-photo-of-vibrant-autumn-in-tokyo-s-urban-streets.jpeg',
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SimpleTextInput(
-              label: 'Name',
-              controller: nameCtrl,
-              hintText: 'enter name here',
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: FirebaseStorageImage(
+                path: 'images/IMG20210408083401-01.jpg',
+                progressBuilder: () =>
+                    const Center(child: Text('Loading image...')),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: NumbericInput(
-              label: 'Age',
-              controller: ageCtrl,
-              integer: true,
-              stepSize: 1,
-              hintText: 'enter age here',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SimpleTextInput(
+                label: 'Name',
+                controller: nameCtrl,
+                hintText: 'enter name here',
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DateTimeInput(
-              label: 'Date',
-              controller: dateCtrl,
-              hintText: 'pick a date',
-              mode: DateTimeInputMode.dateOnly,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NumbericInput(
+                label: 'Age',
+                controller: ageCtrl,
+                integer: true,
+                stepSize: 1,
+                hintText: 'enter age here',
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OptionInput(
-              label: 'Are you sure',
-              options: ['YES', 'NO'],
-              selected: selectedOptions,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DateTimeInput(
+                label: 'Date',
+                controller: dateCtrl,
+                hintText: 'pick a date',
+                mode: DateTimeInputMode.dateOnly,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          FilledButton(
-            onPressed: buttonAction,
-            child: Text(widget.updateId == null ? 'Add' : 'Update'),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OptionInput(
+                label: 'Are you sure',
+                options: ['YES', 'NO'],
+                selected: selectedOptions,
+              ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: buttonAction,
+              child: Text(widget.updateId == null ? 'Add' : 'Update'),
+            )
+          ],
+        ),
       ),
     );
   }
